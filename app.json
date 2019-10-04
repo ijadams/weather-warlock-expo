@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "playlist-example",
+    "description": "a playlist of some songs that Greg likes to demo the Expo AV API.",
+    "scheme": "playlist-example",
+    "slug": "playlist-example",
+    "privacy": "public",
+    "sdkVersion": "34.0.0",
+    "version": "3.0.0",
+    "platforms": ["android", "ios"],
+    "githubUrl": "https://github.com/expo/playlist-example",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain"
+    },
+    "packagerOpts": {
+      "assetExts": ["png", "ttf"]
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
