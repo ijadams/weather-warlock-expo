@@ -37,7 +37,7 @@ class PlaylistItem {
 
 const PLAYLIST = [
   new PlaylistItem(
-    "Weather Warlock",
+    "Live Stream",
     "http://edge.mixlr.com/channel/xicyc",
     false
   )
@@ -469,12 +469,19 @@ export default class App extends React.Component {
     ) : (
       <View style={styles.container}>
         <View />
+        <View style={styles.weatherContainer}>
+        <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontWeight: "700" }]}>
+            Weather for the Blind
+          </Text>
+          <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+            Current Location: New Orleans
+          </Text>
+        </View>
         <View style={styles.nameContainer}>
           <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
             {this.state.playbackInstanceName}
           </Text>
         </View>
-        <View style={styles.space} />
         <View style={styles.videoContainer}>
           <Video
             ref={this._mountVideo}
@@ -623,61 +630,6 @@ export default class App extends React.Component {
             />
           </TouchableHighlight>
         </View>
-        <View
-          style={[
-            styles.buttonsContainerBase,
-            styles.buttonsContainerBottomRow
-          ]}
-        >
-          <TouchableHighlight
-            underlayColor={BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={() => this._trySetRate(1.0, this.state.shouldCorrectPitch)}
-          >
-            <View style={styles.button}>
-              <Text
-                style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
-              >
-                Rate:
-              </Text>
-            </View>
-          </TouchableHighlight>
-          <Slider
-            style={styles.rateSlider}
-            trackImage={ICON_TRACK_1.module}
-            thumbImage={ICON_THUMB_1.module}
-            value={this.state.rate / RATE_SCALE}
-            onSlidingComplete={this._onRateSliderSlidingComplete}
-          />
-          <TouchableHighlight
-            underlayColor={BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={this._onPitchCorrectionPressed}
-          >
-            <View style={styles.button}>
-              <Text
-                style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
-              >
-                PC: {this.state.shouldCorrectPitch ? "yes" : "no"}
-              </Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this._onSpeakerPressed}
-            underlayColor={BACKGROUND_COLOR}
-          >
-            <MaterialIcons
-              name={
-                this.state.throughEarpiece
-                  ? ICON_THROUGH_EARPIECE
-                  : ICON_THROUGH_SPEAKER
-              }
-              size={32}
-              color="black"
-            />
-          </TouchableHighlight>
-        </View>
-        <View />
         {this.state.showVideo ? (
           <View>
             <View
