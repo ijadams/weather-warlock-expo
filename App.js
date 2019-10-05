@@ -18,6 +18,8 @@ import * as Font from "expo-font";
 
 import { MaterialIcons } from "@expo/vector-icons";
 
+import moment from 'moment';
+
 class Icon {
   constructor(module, width, height) {
     this.module = module;
@@ -70,6 +72,18 @@ const ICON_BACK_BUTTON = new Icon(
   require("./assets/images/back_button.png"),
   33,
   25
+);
+
+const LOGO_WHITE = new Icon(
+  require("./assets/images/logo_white.png"),
+  116,
+  26
+);
+
+const LOGO_BLACK = new Icon(
+  require("./assets/images/logo_black.png"),
+  35,
+  8
 );
 
 const ICON_LOOP_ALL_BUTTON = new Icon(
@@ -130,6 +144,13 @@ export default class App extends React.Component {
       isBuffering: false,
       isLoading: true,
       fontLoaded: false,
+      weatherLoaded: false,
+      summary: LOADING_STRING,
+      apparentTemperature: LOADING_STRING,
+      humidity: LOADING_STRING,
+      windSpeed: LOADING_STRING,
+      precipProbability: LOADING_STRING,
+      time: LOADING_STRING,
       shouldCorrectPitch: true,
       volume: 1.0,
       rate: 1.0,
@@ -143,6 +164,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    this._loadWeatherData();
     Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       staysActiveInBackground: false,
@@ -161,6 +183,29 @@ export default class App extends React.Component {
     })();
   }
 
+  _loadWeatherData() {
+    const key = '833fe79702451181d64454401ccd0534'
+    const lat = '29.967281'
+    const lng = '-90.043238'
+    const url = `https://api.darksky.net/forecast/${key}/${lat},${lng}`
+    fetch(
+      url
+    )
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          summary: json.currently.summary,
+          apparentTemperature: Math.floor(json.currently.apparentTemperature),
+          humidity: json.currently.humidity,
+          windSpeed: json.currently.windSpeed,
+          precipProbability: json.currently.precipProbability,
+          time: moment.unix(json.currently.time).format('h:mma'),
+          weatherLoaded: true
+        });
+        this._updateScreenForLoading();
+      });
+  }
+
   async _loadNewPlaybackInstance(playing) {
     if (this.playbackInstance != null) {
       await this.playbackInstance.unloadAsync();
@@ -176,8 +221,6 @@ export default class App extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
       isLooping: this.state.loopingType === LOOPING_TYPE_ONE
-      // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
-      // androidImplementation: 'MediaPlayer',
     };
 
     if (PLAYLIST[this.index].isVideo) {
@@ -464,18 +507,34 @@ export default class App extends React.Component {
   };
 
   render() {
-    return !this.state.fontLoaded ? (
+    return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
     ) : (
       <View style={styles.container}>
         <View />
         <View style={styles.weatherContainer}>
-        <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontWeight: "700" }]}>
-            Weather for the Blind
-          </Text>
-          <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-            Current Location: New Orleans
-          </Text>
+          <Image style={styles.logo} source={LOGO_BLACK.module} />
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 76, marginBottom: 8 }]}>
+              {this.state.apparentTemperature}°
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 20, marginBottom: 8 }]}>
+              New Orleans, LA 
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+              {this.state.summary}
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+              Humidity: {this.state.humidity}
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+              Wind Speed: {this.state.windSpeed}mph
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+            Chance of percipitation: {this.state.precipProbability}%
+            </Text>
+            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+              Local Time: {this.state.time}
+            </Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
@@ -572,14 +631,6 @@ export default class App extends React.Component {
                   : ICON_PLAY_BUTTON.module
               }
             />
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor={BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={this._onStopPressed}
-            disabled={this.state.isLoading}
-          >
-            <Image style={styles.button} source={ICON_STOP_BUTTON.module} />
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor={BACKGROUND_COLOR}
@@ -716,6 +767,10 @@ const styles = StyleSheet.create({
   nameContainer: {
     height: FONT_SIZE
   },
+  weatherContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   space: {
     height: FONT_SIZE
   },
@@ -759,6 +814,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: BACKGROUND_COLOR
+  },
+  logo: {
+    backgroundColor: "transparent",
+    marginTop: 36,
+    marginBottom: 12,
+    width: 140,
+    height: 32
   },
   buttonsContainerBase: {
     flex: 1,

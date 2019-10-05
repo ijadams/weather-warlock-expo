@@ -11,10 +11,10 @@
     "githubUrl": "https://github.com/expo/playlist-example",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo_black.png",
     "splash": {
-      "backgroundColor": "#ffffff",
-      "image": "./assets/images/icon.png",
+      "backgroundColor": "#FFF8ED",
+      "image": "./assets/images/logo_black.png",
       "resizeMode": "contain"
     },
     "packagerOpts": {
