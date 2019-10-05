@@ -117,7 +117,7 @@ const LOOPING_TYPE_ONE = 1;
 const LOOPING_TYPE_ICONS = { 0: ICON_LOOP_ALL_BUTTON, 1: ICON_LOOP_ONE_BUTTON };
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
-const BACKGROUND_COLOR = "#FFF8ED";
+const BACKGROUND_COLOR = "#fff";
 const DISABLED_OPACITY = 0.5;
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
@@ -196,7 +196,7 @@ export default class App extends React.Component {
         this.setState({
           summary: json.currently.summary,
           temperature: Math.floor(json.currently.temperature),
-          humidity: json.currently.humidity,
+          humidity: json.currently.humidity * 100,
           windSpeed: json.currently.windSpeed,
           precipProbability: json.currently.precipProbability,
           time: moment.unix(json.currently.time).format('h:mma'),
@@ -524,7 +524,7 @@ export default class App extends React.Component {
               {this.state.summary}
             </Text>
             <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-              Humidity: {this.state.humidity}
+              Humidity: {this.state.humidity}%
             </Text>
             <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
               Wind Speed: {this.state.windSpeed}mph
