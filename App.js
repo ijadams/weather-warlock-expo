@@ -146,7 +146,7 @@ export default class App extends React.Component {
       fontLoaded: false,
       weatherLoaded: false,
       summary: LOADING_STRING,
-      apparentTemperature: LOADING_STRING,
+      temperature: LOADING_STRING,
       humidity: LOADING_STRING,
       windSpeed: LOADING_STRING,
       precipProbability: LOADING_STRING,
@@ -195,7 +195,7 @@ export default class App extends React.Component {
       .then(json => {
         this.setState({
           summary: json.currently.summary,
-          apparentTemperature: Math.floor(json.currently.apparentTemperature),
+          temperature: Math.floor(json.currently.temperature),
           humidity: json.currently.humidity,
           windSpeed: json.currently.windSpeed,
           precipProbability: json.currently.precipProbability,
@@ -515,7 +515,7 @@ export default class App extends React.Component {
         <View style={styles.weatherContainer}>
           <Image style={styles.logo} source={LOGO_BLACK.module} />
             <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 76, marginBottom: 8 }]}>
-              {this.state.apparentTemperature}°
+              {this.state.temperature}°
             </Text>
             <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 20, marginBottom: 8 }]}>
               New Orleans, LA 
