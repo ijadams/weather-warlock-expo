@@ -11,7 +11,7 @@
     "githubUrl": "https://github.com/expo/playlist-example",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/images/play.svg",
+    "icon": "./assets/images/sun.png",
     "splash": {
       "backgroundColor": "#fff",
       "image": "./assets/images/diagram.png",
