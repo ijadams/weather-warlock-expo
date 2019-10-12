@@ -17,6 +17,7 @@
     "expo-av": "^6.0.0",
     "expo-font": "^6.0.1",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz"
   },

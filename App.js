@@ -13,6 +13,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import moment from 'moment';
 import {styles} from './constants';
 import * as fromPlaylist from './constants/player.const';
+import {Weather} from './components';
+
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
@@ -407,30 +409,7 @@ export default class App extends React.Component {
     ) : (
       <View style={styles.container}>
         <View />
-        <View style={styles.weatherContainer}>
-          <Image style={styles.logo} source={fromPlaylist.LOGO_BLACK.module} />
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 76, marginBottom: 8 }]}>
-              {this.state.temperature}°
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular", fontSize: 20, marginBottom: 8 }]}>
-              New Orleans, LA 
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-              {this.state.summary}
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-              Humidity: {this.state.humidity}%
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-              Wind Speed: {this.state.windSpeed}mph
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-            Chance of percipitation: {this.state.precipProbability}%
-            </Text>
-            <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
-              Local Time: {this.state.time}
-            </Text>
-        </View>
+        <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
           <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
             {this.state.playbackInstanceName}
