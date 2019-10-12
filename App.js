@@ -74,7 +74,9 @@ export default class App extends React.Component {
     (async () => {
       await Font.loadAsync({
         ...MaterialIcons.font,
-        "cutive-mono-regular": require("./assets/fonts/CutiveMono-Regular.ttf")
+        "roboto-regular": require("./assets/fonts/Roboto-Regular.ttf"),
+        "roboto-bold": require("./assets/fonts/Roboto-Bold.ttf"),
+        "roboto-light": require("./assets/fonts/Roboto-Light.ttf")
       });
       this.setState({ fontLoaded: true });
     })();
@@ -97,6 +99,8 @@ export default class App extends React.Component {
           windSpeed: json.currently.windSpeed,
           precipProbability: json.currently.precipProbability,
           time: moment.unix(json.currently.time).format('h:mma'),
+          pressure: json.currently.pressure,
+          uvIndex: json.currently.uvIndex,
           weatherLoaded: true
         });
         this._updateScreenForLoading();
@@ -121,7 +125,6 @@ export default class App extends React.Component {
     };
 
     if (fromPlaylist.PLAYLIST[this.index].isVideo) {
-      console.log(this._onPlaybackStatusUpdate);
       await this._video.loadAsync(source, initialStatus);
       // this._video.onPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
       this.playbackInstance = this._video;
@@ -411,7 +414,7 @@ export default class App extends React.Component {
         <View />
         <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
-          <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+          <Text style={[styles.text, { fontFamily: "roboto-regular" }]}>
             {this.state.playbackInstanceName}
           </Text>
         </View>
@@ -458,7 +461,7 @@ export default class App extends React.Component {
               style={[
                 styles.text,
                 styles.buffering,
-                { fontFamily: "cutive-mono-regular" }
+                { fontFamily: "roboto-regular" }
               ]}
             >
               {this.state.isBuffering ? BUFFERING_STRING : ""}
@@ -467,7 +470,7 @@ export default class App extends React.Component {
               style={[
                 styles.text,
                 styles.timestamp,
-                { fontFamily: "cutive-mono-regular" }
+                { fontFamily: "roboto-regular" }
               ]}
             >
               {this._getTimestamp()}
@@ -571,7 +574,7 @@ export default class App extends React.Component {
               >
                 <View style={styles.button}>
                   <Text
-                    style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                    style={[styles.text, { fontFamily: "roboto-regular" }]}
                   >
                     Poster: {this.state.poster ? "yes" : "no"}
                   </Text>
@@ -585,7 +588,7 @@ export default class App extends React.Component {
               >
                 <View style={styles.button}>
                   <Text
-                    style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                    style={[styles.text, { fontFamily: "roboto-regular" }]}
                   >
                     Fullscreen
                   </Text>
@@ -608,7 +611,7 @@ export default class App extends React.Component {
               >
                 <View style={styles.button}>
                   <Text
-                    style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                    style={[styles.text, { fontFamily: "roboto-regular" }]}
                   >
                     Native Controls:{" "}
                     {this.state.useNativeControls ? "yes" : "no"}

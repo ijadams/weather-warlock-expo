@@ -24,10 +24,6 @@ export const styles = StyleSheet.create({
     nameContainer: {
       height: FONT_SIZE
     },
-    weatherContainer: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
     space: {
       height: FONT_SIZE
     },
