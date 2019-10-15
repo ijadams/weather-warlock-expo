@@ -29,7 +29,7 @@ export class Weather extends React.Component {
         return (
             <View style={weatherStyles.weatherContainer}>
                 <Image style={styles.logo} source={fromPlaylist.LOGO_BLACK.module}/>
-                <Text style={[styles.text, {fontFamily: "roboto-bold", fontSize: 75, marginBottom: 6}]}>
+                <Text style={[styles.text, {fontFamily: "roboto-bold", fontSize: 50, marginBottom: 6}]}>
                     {this.props.weather.temperature}°
                 </Text>
                 <Text style={[styles.text, {
@@ -49,33 +49,33 @@ export class Weather extends React.Component {
 
                 <View style={weatherStyles.container}>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Humidity: {`\n`}
+                        Humidity:
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
-                            {this.props.weather.humidity}%
+                            &nbsp;{this.props.weather.humidity}%
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Wind Speed: {`\n`}
+                        Wind Speed:
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
-                            {this.props.weather.windSpeed}mph
+                            &nbsp;{this.props.weather.windSpeed}mph
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Percipitation: {`\n`}
+                        Percipitation:
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
-                            {this.props.weather.precipProbability}%
+                            &nbsp;{this.props.weather.precipProbability}%
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Pressure: {`\n`}
+                        Pressure:
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
-                            {this.props.weather.pressure}mb
+                            &nbsp;{this.props.weather.pressure}mb
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        UV Index: {`\n`}
+                        UV Index:
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
-                            {this.props.weather.uvIndex}
+                            &nbsp;{this.props.weather.uvIndex}
                         </Text>
                     </Text>
                 </View>
@@ -108,11 +108,13 @@ const weatherStyles = StyleSheet.create({
         marginRight: '2.5%',
     },
     text: {
-        width: '50%',
-        color: 'rgba(0,0,0,0.8)'
+        width: '100%',
+        color: 'rgba(0,0,0,0.8)',
+        textAlign: 'center'
     },
     item: {
-        width: '100%'
+        width: '100%',
+        textAlign: 'center'
     },
     subText: {
         color: 'rgba(0,0,0,1)'
