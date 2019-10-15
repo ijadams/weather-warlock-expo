@@ -253,37 +253,9 @@ export default class App extends React.Component {
     }
   };
 
-  _onStopPressed = () => {
-    if (this.playbackInstance != null) {
-      this.playbackInstance.stopAsync();
-    }
-  };
-
-  _onForwardPressed = () => {
-    if (this.playbackInstance != null) {
-      this._advanceIndex(true);
-      this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
-    }
-  };
-
-  _onBackPressed = () => {
-    if (this.playbackInstance != null) {
-      this._advanceIndex(false);
-      this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
-    }
-  };
-
   _onMutePressed = () => {
     if (this.playbackInstance != null) {
       this.playbackInstance.setIsMutedAsync(!this.state.muted);
-    }
-  };
-
-  _onLoopPressed = () => {
-    if (this.playbackInstance != null) {
-      this.playbackInstance.setIsLoopingAsync(
-        this.state.loopingType !== LOOPING_TYPE_ONE
-      );
     }
   };
 
@@ -292,58 +264,6 @@ export default class App extends React.Component {
       this.playbackInstance.setVolumeAsync(value);
     }
   };
-
-  _trySetRate = async (rate, shouldCorrectPitch) => {
-    if (this.playbackInstance != null) {
-      try {
-        await this.playbackInstance.setRateAsync(rate, shouldCorrectPitch);
-      } catch (error) {
-        // Rate changing could not be performed, possibly because the client's Android API is too old.
-      }
-    }
-  };
-
-  _onRateSliderSlidingComplete = async value => {
-    this._trySetRate(value * RATE_SCALE, this.state.shouldCorrectPitch);
-  };
-
-  _onPitchCorrectionPressed = async value => {
-    this._trySetRate(this.state.rate, !this.state.shouldCorrectPitch);
-  };
-
-  _onSeekSliderValueChange = value => {
-    if (this.playbackInstance != null && !this.isSeeking) {
-      this.isSeeking = true;
-      this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
-      this.playbackInstance.pauseAsync();
-    }
-  };
-
-  _onSeekSliderSlidingComplete = async value => {
-    if (this.playbackInstance != null) {
-      this.isSeeking = false;
-      const seekPosition = value * this.state.playbackInstanceDuration;
-      if (this.shouldPlayAtEndOfSeek) {
-        this.playbackInstance.playFromPositionAsync(seekPosition);
-      } else {
-        this.playbackInstance.setPositionAsync(seekPosition);
-      }
-    }
-  };
-
-  _getSeekSliderPosition() {
-    if (
-      this.playbackInstance != null &&
-      this.state.playbackInstancePosition != null &&
-      this.state.playbackInstanceDuration != null
-    ) {
-      return (
-        this.state.playbackInstancePosition /
-        this.state.playbackInstanceDuration
-      );
-    }
-    return 0;
-  }
 
   _getMMSSFromMillis(millis) {
     const totalSeconds = millis / 1000;
@@ -439,44 +359,26 @@ export default class App extends React.Component {
             useNativeControls={this.state.useNativeControls}
           />
         </View>
-        <View
-          style={[
-            styles.playbackContainer,
-            {
-              opacity: this.state.isLoading ? styles.DISABLED_OPACITY : 1.0
-            }
-          ]}
-        >
-          <Slider
-            style={styles.playbackSlider}
-            trackImage={fromPlaylist.ICON_TRACK_1.module}
-            thumbImage={fromPlaylist.ICON_THUMB_1.module}
-            value={this._getSeekSliderPosition()}
-            onValueChange={this._onSeekSliderValueChange}
-            onSlidingComplete={this._onSeekSliderSlidingComplete}
-            disabled={this.state.isLoading}
-          />
           <View style={styles.timestampRow}>
-            <Text
-              style={[
-                styles.text,
-                styles.buffering,
-                { fontFamily: "roboto-regular" }
-              ]}
-            >
-              {this.state.isBuffering ? BUFFERING_STRING : ""}
-            </Text>
-            <Text
-              style={[
-                styles.text,
-                styles.timestamp,
-                { fontFamily: "roboto-regular" }
-              ]}
-            >
-              {this._getTimestamp()}
-            </Text>
+              <Text
+                  style={[
+                      styles.text,
+                      styles.buffering,
+                      {fontFamily: "roboto-regular"}
+                  ]}
+              >
+                  {this.state.isBuffering ? BUFFERING_STRING : ""}
+              </Text>
+              <Text
+                  style={[
+                      styles.text,
+                      styles.timestamp,
+                      {fontFamily: "roboto-regular"}
+                  ]}
+              >
+                  {this._getTimestamp()}
+              </Text>
           </View>
-        </View>
         <View
           style={[
             styles.buttonsContainerBase,
@@ -486,14 +388,6 @@ export default class App extends React.Component {
             }
           ]}
         >
-          <TouchableHighlight
-            underlayColor={styles.BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={this._onBackPressed}
-            disabled={this.state.isLoading}
-          >
-            <Image style={styles.button} source={fromPlaylist.ICON_BACK_BUTTON.module} />
-          </TouchableHighlight>
           <TouchableHighlight
             underlayColor={styles.BACKGROUND_COLOR}
             style={styles.wrapper}
@@ -508,14 +402,6 @@ export default class App extends React.Component {
                   : fromPlaylist.ICON_PLAY_BUTTON.module
               }
             />
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor={styles.BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={this._onForwardPressed}
-            disabled={this.state.isLoading}
-          >
-            <Image style={styles.button} source={fromPlaylist.ICON_FORWARD_BUTTON.module} />
           </TouchableHighlight>
         </View>
         <View
@@ -547,81 +433,7 @@ export default class App extends React.Component {
               onValueChange={this._onVolumeSliderValueChange}
             />
           </View>
-          <TouchableHighlight
-            underlayColor={styles.BACKGROUND_COLOR}
-            style={styles.wrapper}
-            onPress={this._onLoopPressed}
-          >
-            <Image
-              style={styles.button}
-              source={fromPlaylist.LOOPING_TYPE_ICONS[this.state.loopingType].module}
-            />
-          </TouchableHighlight>
         </View>
-        {this.state.showVideo ? (
-          <View>
-            <View
-              style={[
-                styles.buttonsContainerBase,
-                styles.buttonsContainerTextRow
-              ]}
-            >
-              <View />
-              <TouchableHighlight
-                underlayColor={styles.BACKGROUND_COLOR}
-                style={styles.wrapper}
-                onPress={this._onPosterPressed}
-              >
-                <View style={styles.button}>
-                  <Text
-                    style={[styles.text, { fontFamily: "roboto-regular" }]}
-                  >
-                    Poster: {this.state.poster ? "yes" : "no"}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <View />
-              <TouchableHighlight
-                underlayColor={styles.BACKGROUND_COLOR}
-                style={styles.wrapper}
-                onPress={this._onFullscreenPressed}
-              >
-                <View style={styles.button}>
-                  <Text
-                    style={[styles.text, { fontFamily: "roboto-regular" }]}
-                  >
-                    Fullscreen
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <View />
-            </View>
-            <View style={styles.space} />
-            <View
-              style={[
-                styles.buttonsContainerBase,
-                styles.buttonsContainerTextRow
-              ]}
-            >
-              <View />
-              <TouchableHighlight
-                underlayColor={styles.BACKGROUND_COLOR}
-                style={styles.wrapper}
-                onPress={this._onUseNativeControlsPressed}
-              >
-                <View style={styles.button}>
-                  <Text
-                    style={[styles.text, { fontFamily: "roboto-regular" }]}
-                  >
-                    Native Controls:{" "}
-                    {this.state.useNativeControls ? "yes" : "no"}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <View />
-            </View>
-          </View>
-        ) : null}
       </View>
     );
   }
