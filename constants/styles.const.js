@@ -120,4 +120,3 @@ export const styles = StyleSheet.create({
       maxWidth: DEVICE_WIDTH
     }
   });
-  
