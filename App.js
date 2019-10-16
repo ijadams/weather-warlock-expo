@@ -19,15 +19,12 @@ const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
 const BUFFERING_STRING = "...buffering...";
-const RATE_SCALE = 3.0;
 const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.index = 0;
-    this.isSeeking = false;
-    this.shouldPlayAtEndOfSeek = false;
     this.playbackInstance = null;
     this.state = {
       showVideo: false,
@@ -293,39 +290,6 @@ export default class App extends React.Component {
     return "";
   }
 
-  _onPosterPressed = () => {
-    this.setState({ poster: !this.state.poster });
-  };
-
-  _onUseNativeControlsPressed = () => {
-    this.setState({ useNativeControls: !this.state.useNativeControls });
-  };
-
-  _onFullscreenPressed = () => {
-    try {
-      this._video.presentFullscreenPlayer();
-    } catch (error) {
-      console.log(error.toString());
-    }
-  };
-
-  _onSpeakerPressed = () => {
-    this.setState(
-      state => {
-        return { throughEarpiece: !state.throughEarpiece };
-      },
-      ({ throughEarpiece }) =>
-        Audio.setAudioModeAsync({
-          allowsRecordingIOS: false,
-          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-          playsInSilentModeIOS: true,
-          shouldDuckAndroid: true,
-          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-          playThroughEarpieceAndroid: throughEarpiece
-        })
-    );
-  };
-
   render() {
     return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
@@ -345,8 +309,6 @@ export default class App extends React.Component {
               styles.video,
               {
                 opacity: this.state.showVideo ? 1.0 : 0.0,
-                width: this.state.videoWidth,
-                height: this.state.videoHeight
               }
             ]}
             resizeMode={Video.RESIZE_MODE_CONTAIN}
