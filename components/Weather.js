@@ -32,7 +32,7 @@ export class Weather extends React.Component {
                 <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 24, marginTop: -10, marginBottom: 0}]}>
                     Weather for the Blind
                 </Text>
-                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 100, marginTop: -10, marginBottom: 0}]}>
+                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 100, marginTop: -30, marginBottom: 0}]}>
                     {this.props.weather.temperature}°
                 </Text>
                 <Text style={[styles.text, {
@@ -43,10 +43,10 @@ export class Weather extends React.Component {
                 }]}>
                     New Orleans, LA
                 </Text>
-                <Text style={[weatherStyles.text, {fontFamily: "roboto-regular"}]}>
+                <Text style={[weatherStyles.text, {fontFamily: "roboto-bold"}]}>
                     {this.state.time}
                 </Text>
-                <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
+                <Text style={[weatherStyles.subText, {fontFamily: "roboto-bold"}]}>
                     {this.props.weather.summary}
                 </Text>
                 <View style={weatherStyles.container}>
