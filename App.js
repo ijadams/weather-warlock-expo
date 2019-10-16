@@ -75,6 +75,7 @@ export default class App extends React.Component {
     (async () => {
       await Font.loadAsync({
         ...MaterialIcons.font,
+        "grenze-regular": require("./assets/fonts/Grenze-Regular.ttf"),
         "roboto-regular": require("./assets/fonts/Roboto-Regular.ttf"),
         "roboto-bold": require("./assets/fonts/Roboto-Bold.ttf"),
         "roboto-light": require("./assets/fonts/Roboto-Light.ttf")
@@ -84,10 +85,7 @@ export default class App extends React.Component {
   }
 
   _loadWeatherData() {
-    const key = '833fe79702451181d64454401ccd0534';
-    const lat = '29.967281';
-    const lng = '-90.043238';
-    const url = `https://api.darksky.net/forecast/${key}/${lat},${lng}`;
+    const url = `https://weather-warlock.s3.amazonaws.com/weather.json`;
     fetch(
       url
     )

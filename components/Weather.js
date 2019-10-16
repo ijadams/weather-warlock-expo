@@ -29,57 +29,59 @@ export class Weather extends React.Component {
         return (
             <View style={weatherStyles.weatherContainer}>
                 <Image style={styles.logo} source={fromPlaylist.LOGO_BLACK.module}/>
-                <Text style={[styles.text, {fontFamily: "roboto-bold", fontSize: 75, marginBottom: 6}]}>
+                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 24, marginTop: -10, marginBottom: 0}]}>
+                    Weather for the Blind
+                </Text>
+                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 100, marginTop: -10, marginBottom: 0}]}>
                     {this.props.weather.temperature}°
                 </Text>
                 <Text style={[styles.text, {
-                    fontFamily: "roboto-regular",
-                    fontSize: 15,
+                    fontFamily: "grenze-regular",
+                    fontSize: 20,
                     letterSpacing: 1,
-                    marginBottom: 12
+                    marginBottom: 6
                 }]}>
                     New Orleans, LA
                 </Text>
                 <Text style={[weatherStyles.text, {fontFamily: "roboto-regular"}]}>
-                    Local Time: {this.state.time}
+                    {this.state.time}
                 </Text>
-                <Text style={[weatherStyles.text, {fontFamily: "roboto-regular"}]}>
+                <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                     {this.props.weather.summary}
                 </Text>
-
                 <View style={weatherStyles.container}>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Humidity:
+                        Humidity
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.humidity}%
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Wind Speed:
+                        Wind Speed
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.windSpeed}mph
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Percipitation:
+                        Percipitation
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.precipProbability}%
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Wind Direction:
+                        Wind Direction
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.windBearing}
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        Pressure:
+                        Pressure
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.pressure}mb
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
-                        UV Index:
+                        UV Index
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
                             {'\n'}{this.props.weather.uvIndex}
                         </Text>
@@ -104,14 +106,14 @@ const weatherStyles = StyleSheet.create({
         height: 32
     },
     container: {
-        marginTop: 5,
+        marginTop: 10,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
         maxWidth: '100%',
         height: 'auto',
-        marginLeft: '2.5%',
-        marginRight: '2.5%',
+        marginLeft: '25%',
+        marginRight: '25%',
     },
     text: {
         width: '50%',
