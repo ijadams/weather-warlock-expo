@@ -43,6 +43,7 @@ export default class App extends React.Component {
       temperature: LOADING_STRING,
       humidity: LOADING_STRING,
       windSpeed: LOADING_STRING,
+      windBearing: LOADING_STRING,
       precipProbability: LOADING_STRING,
       time: LOADING_STRING,
       shouldCorrectPitch: true,
@@ -59,6 +60,9 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._loadWeatherData();
+    setInterval(() => {
+       this._loadWeatherData();
+     }, 60000 );
     Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       staysActiveInBackground: false,
@@ -80,20 +84,22 @@ export default class App extends React.Component {
   }
 
   _loadWeatherData() {
-    const key = '833fe79702451181d64454401ccd0534'
-    const lat = '29.967281'
-    const lng = '-90.043238'
-    const url = `https://api.darksky.net/forecast/${key}/${lat},${lng}`
+    const key = '833fe79702451181d64454401ccd0534';
+    const lat = '29.967281';
+    const lng = '-90.043238';
+    const url = `https://api.darksky.net/forecast/${key}/${lat},${lng}`;
     fetch(
       url
     )
       .then(res => res.json())
       .then(json => {
+
         this.setState({
           summary: json.currently.summary,
           temperature: Math.floor(json.currently.temperature),
           humidity: json.currently.humidity * 100,
           windSpeed: json.currently.windSpeed,
+          windBearing: this._getWindBearing(json.currently.windBearing),
           precipProbability: json.currently.precipProbability,
           time: moment.unix(json.currently.time).format('h:mma'),
           pressure: json.currently.pressure,
@@ -160,6 +166,11 @@ export default class App extends React.Component {
         isLoading: false
       });
     }
+  }
+
+  _getWindBearing(windBearing) {
+      const directions = ['North', 'North-West', 'West', 'South-West', 'South', 'South-East', 'East', 'North-East'];
+      return directions[Math.round(((windBearing %= 360) < 0 ? windBearing + 360 : windBearing) / 45) % 8];
   }
 
   _onPlaybackStatusUpdate = status => {
