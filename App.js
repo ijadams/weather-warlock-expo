@@ -13,16 +13,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import moment from 'moment';
 import {styles} from './constants';
 import * as fromPlaylist from './constants/player.const';
-import {Weather} from './components';
-
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMusic } from '@fortawesome/free-solid-svg-icons'
+import {Weather, AnimatedGradient} from './components';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
 const BUFFERING_STRING = "...buffering...";
 const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -306,13 +304,11 @@ export default class App extends React.Component {
     return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
     ) : (
-      <View style={styles.container}>
+      <View style={styles.superContainer}>
         <View />
         <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
-            <Text style={[styles.text, {fontFamily: "roboto-light", color: 'rgba(0,0,0,0.8)', fontSize: 12}]}>
-                Listening to: <Text style={[styles.text, {fontFamily: "roboto-regular", color: 'rgba(0,0,0,1)', fontSize: 12}]}>{this.state.playbackInstanceName}</Text>
-            </Text>
+          <Text style={[styles.text, {fontFamily: "grenze-regular", color: 'rgba(0,0,0,1)', fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
         </View>
         <View style={styles.videoContainer}>
           <Video
@@ -408,6 +404,11 @@ export default class App extends React.Component {
             />
           </View>
         </View>
+        <AnimatedGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={{ height: 50, width: '100%', alignItems: 'center', borderRadius: 5 }}>
+        </AnimatedGradient>
       </View>
     );
   }

@@ -1,7 +1,7 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
 export const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
-export const BACKGROUND_COLOR = "#fff";
+export const BACKGROUND_COLOR = "transparent";
 export const FONT_SIZE = 14;
 export const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
 const ICON_THUMB_1 = {height: 19};
@@ -12,6 +12,14 @@ export const styles = StyleSheet.create({
     emptyContainer: {
         alignSelf: "stretch",
         backgroundColor: BACKGROUND_COLOR
+    },
+    superContainer: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignSelf: "stretch",
+        backgroundColor: "transparent"
     },
     container: {
         flex: 1,
@@ -24,7 +32,7 @@ export const styles = StyleSheet.create({
     wrapper: {},
     nameContainer: {
         marginTop: 10,
-        height: FONT_SIZE,
+        height: 'auto',
     },
     space: {
         height: FONT_SIZE
