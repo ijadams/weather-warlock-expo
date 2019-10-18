@@ -13,7 +13,7 @@ export class PlaylistItem {
 export const PLAYLIST = [
     new PlaylistItem(
         "Live Stream",
-        "http://edge.mixlr.com/channel/xicyc",
+        "http://edge.mixlr.com/channel/ggrvi",
         false
     )
 ];
@@ -33,12 +33,12 @@ export class Icon {
 }
 
 export const ICON_PLAY_BUTTON = new Icon(
-    require("../assets/images/play_button.png"),
+    require("../assets/images/play_button_custom.png"),
     34,
     51
 );
 export const ICON_PAUSE_BUTTON = new Icon(
-    require("../assets/images/pause_button.png"),
+    require("../assets/images/pause_button_custom.png"),
     34,
     51
 );

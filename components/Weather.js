@@ -118,14 +118,16 @@ const weatherStyles = StyleSheet.create({
     text: {
         width: '50%',
         color: 'rgba(0,0,0,0.8)',
-        marginBottom: 4,
-        textAlign: 'center'
+        marginBottom: 6,
+        textAlign: 'center',
+        fontSize: 12
     },
     item: {
         width: '100%',
         textAlign: 'center'
     },
     subText: {
+        fontSize: 14,
         color: 'rgba(0,0,0,1)'
     }
 });

@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     wrapper: {},
     nameContainer: {
         marginTop: 10,
-        height: FONT_SIZE
+        height: FONT_SIZE,
     },
     space: {
         height: FONT_SIZE
@@ -48,19 +48,20 @@ export const styles = StyleSheet.create({
         alignSelf: "stretch"
     },
     timestampRow: {
-        minHeight: FONT_SIZE
+        minHeight: FONT_SIZE,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     text: {
         fontSize: FONT_SIZE,
         minHeight: FONT_SIZE
     },
     buffering: {
-        textAlign: "left",
-        paddingLeft: 20
+        textAlign: "center"
     },
     timestamp: {
-        textAlign: "right",
-        paddingRight: 20
+        textAlign: "right"
     },
     button: {
         backgroundColor: BACKGROUND_COLOR

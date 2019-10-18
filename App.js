@@ -15,6 +15,9 @@ import {styles} from './constants';
 import * as fromPlaylist from './constants/player.const';
 import {Weather} from './components';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faMusic } from '@fortawesome/free-solid-svg-icons'
+
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
@@ -307,9 +310,9 @@ export default class App extends React.Component {
         <View />
         <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
-          <Text style={[styles.text, { fontFamily: "roboto-regular" }]}>
-            {this.state.playbackInstanceName}
-          </Text>
+            <Text style={[styles.text, {fontFamily: "roboto-light", color: 'rgba(0,0,0,0.8)', fontSize: 12}]}>
+                Listening to: <Text style={[styles.text, {fontFamily: "roboto-regular", color: 'rgba(0,0,0,1)', fontSize: 12}]}>{this.state.playbackInstanceName}</Text>
+            </Text>
         </View>
         <View style={styles.videoContainer}>
           <Video
