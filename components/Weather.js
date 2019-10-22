@@ -38,18 +38,28 @@ export class Weather extends React.Component {
                 <Text style={[styles.text, {
                     fontFamily: "grenze-regular",
                     fontSize: 20,
+                    textAlign: "center",
                     letterSpacing: 1,
                     marginBottom: 6
                 }]}>
                     New Orleans, LA
-                </Text>
-                <Text style={[weatherStyles.text, {fontFamily: "roboto-bold"}]}>
-                    {this.state.time}
-                </Text>
-                <Text style={[weatherStyles.subText, {fontFamily: "roboto-bold"}]}>
-                    {this.props.weather.summary}
+                    <Text style={[weatherStyles.subText, {fontFamily: "grenze-regular", fontSize: 18, textAlign: "center"}]}>
+                        {'\n'}{this.state.time}
+                    </Text>
                 </Text>
                 <View style={weatherStyles.container}>
+                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
+                        Conditions
+                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
+                            {'\n'}{this.props.weather.summary}
+                        </Text>
+                    </Text>
+                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
+                        Humidity
+                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
+                            {'\n'}{this.props.weather.humidity}%
+                        </Text>
+                    </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light"}]}>
                         Humidity
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular"}]}>
