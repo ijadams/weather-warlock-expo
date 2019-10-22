@@ -57,7 +57,8 @@ export default class App extends React.Component {
       useNativeControls: false,
       fullscreen: false,
       throughEarpiece: false,
-      colors: ['rgb(255,255,255)', 'rgb(255,255,255)', 'rgb(255,255,255)']
+      colors: ['rgb(255,255,255)', 'rgb(255,255,255)', 'rgb(255,255,255)'],
+      isNight: false
     };
   }
 
@@ -66,6 +67,7 @@ export default class App extends React.Component {
     setInterval(() => {
        this._loadWeatherData();
      }, 60000 );
+    
     Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       staysActiveInBackground: false,
@@ -106,7 +108,8 @@ export default class App extends React.Component {
           pressure: json.currently.pressure,
           uvIndex: json.currently.uvIndex,
           weatherLoaded: true,
-          colors: this._getColors(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2))
+          colors: this._getColors(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2)),
+          isNight: this._isNightMode(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2))
         });
         this._updateScreenForLoading();
       });
@@ -144,6 +147,13 @@ export default class App extends React.Component {
     }
 
     this._updateScreenForLoading(false);
+  }
+
+  _isNightMode(currentTime, sunUp, sunDown) {
+    currentTime = Number(currentTime);
+    sunUp = Number(sunUp);
+    sunDown = Number(sunDown) + 12;
+    return currentTime >= sunUp && currentTime <= sunDown;
   }
 
   _getColors(currentTime, sunUp, sunDown) {
