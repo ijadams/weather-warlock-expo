@@ -14,7 +14,7 @@ import moment from 'moment';
 import {styles} from './constants';
 import * as fromPlaylist from './constants/player.const';
 import {Weather} from './components';
-import { LinearGradient } from 'expo-linear-gradient';
+import {AnimatedGradient} from './components/AnimatedGradient';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
 const FONT_SIZE = 14;
@@ -108,7 +108,7 @@ export default class App extends React.Component {
           pressure: json.currently.pressure,
           uvIndex: json.currently.uvIndex,
           weatherLoaded: true,
-          colors: this._getColors(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2)),
+          timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2)),
           isNight: this._isNightMode(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2))
         });
         this._updateScreenForLoading();
@@ -156,27 +156,23 @@ export default class App extends React.Component {
     return currentTime >= sunUp && currentTime <= sunDown;
   }
 
-  _getColors(currentTime, sunUp, sunDown) {
+  _getTimeOfDay(currentTime, sunUp, sunDown) {
     currentTime = Number(currentTime);
     sunUp = Number(sunUp);
     sunDown = Number(sunDown) + 12;
     const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
     const isDawn = Math.abs(sunUp - currentTime) <= 2;
     const isDusk = Math.abs(sunDown - currentTime) <= 2;
-    const nightColors = ['rgb(0,0,0)', 'rgb(12,12,12)', 'rgb(25,25,25)'];
-    const dayColors = ['rgb(255,255,255)', 'rgb(243,243,243)', 'rgb(230,230,230)'];
-    const dawnColors = ['rgb(25,25,25)', 'rgb(50,50,50)', 'rgb(75,75,75)'];
-    const duskColors = ['rgb(150,150,150)', 'rgb(175,175,175)', 'rgb(200,200,200)'];
     if (isDawn) {
-      return dawnColors;
+      return 'dawn';
     }
     if (isDusk) {
-      return duskColors;
+      return 'dusk';
     }
     if (isDayTime) {
-      return dayColors;
+      return 'day';
     }
-    return nightColors;
+    return 'night';
   }
 
   _mountVideo = component => {
@@ -340,9 +336,7 @@ export default class App extends React.Component {
     return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
     ) : (
-        <LinearGradient
-            colors={this.state.colors}
-            style={styles.superContainer}>
+        <AnimatedGradient time={this.state.timeOfDay} speed={this.state.windSpeed}>
         <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
           <Text style={[styles.text, {fontFamily: "grenze-regular", color: 'rgba(0,0,0,1)', fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
@@ -441,7 +435,7 @@ export default class App extends React.Component {
             />
           </View>
         </View>
-      </LinearGradient>
+      </AnimatedGradient>
     );
   }
 }

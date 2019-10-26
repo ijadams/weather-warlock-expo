@@ -1,62 +1,153 @@
-import React, { Component } from "react";
-import { StyleSheet, Animated } from "react-native";
-import { GradientHelper } from "./GradientHelper";
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import {StyleSheet, StatusBar, Dimensions, View, Animated, Easing} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import rgb2hex from 'rgb2hex';
 
-const styles = StyleSheet.create({
-  component: {
-    flex: 1
+class LinearGradientComponent extends Component {
+  render () {
+    const {color0, color1, children, points} = this.props;
+    const gStart = points.start;
+    const gEnd = points.end;
+    return (
+      <LinearGradient
+        // colors={this.props.colors.map((c) => rgb2hex(c).hex)}
+        colors={[color0, color1].map((c) => rgb2hex(c).hex)}
+        start={gStart}
+        end={gEnd}
+        style={[styles.linearGradient]}>
+        {children}
+      </LinearGradient>
+    )
   }
-});
+}
+Animated.LinearGradientComponent = Animated.createAnimatedComponent(LinearGradientComponent)
+// Animated.LinearGradient = Animated.createAnimatedComponent(LinearGradient)
 
-const AnimatedGradientHelper = Animated.createAnimatedComponent(GradientHelper);
+export const presetColors = {
+  day: [
+    'rgb(255, 255, 255)',
+    'rgb(225, 225, 225)',
+    'rgb(200, 200, 200)',
+    'rgb(175, 175, 175)',
+    'rgb(150, 150, 150)',
+  ],
+  dusk: [
+    'rgb(200, 200, 200)',
+    'rgb(175, 175, 175)',
+    'rgb(150, 150, 150)',
+  ],
+  dawn: [
+    'rgb(100, 100, 100)',
+    'rgb(125, 125, 125)',
+    'rgb(150, 150, 150)',
+  ],
+  night: [
+    'rgb(0, 0, 0)',
+    'rgb(25, 25, 25)',
+  ]
+};
 
 export class AnimatedGradient extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      prevColors: ['rgb(255,255,255)', 'rgb(255,255,255)'],
-      colors: ['rgb(125,125,125)', 'rgb(125,125,125)'],
-      tweener: new Animated.Value(0)
-    };
-    console.log('props', this.state);
+  static defaultProps = {
+    points: {
+      start: {x: 0, y: 0.4}, 
+      end: {x: 1, y: 0.6}
+    }
   }
 
-
-  componentDidMount() {
-    console.log('this', this)    
+  state = {
+    speed: 4000,
+    customColors: presetColors.day,
+    color0: new Animated.Value(0),
+    color1: new Animated.Value(0),
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-
-    const { tweener } = this.state;
-    Animated.timing(tweener, {
-      toValue: 1
-    }).start();
+  _getSpeed(speed) {
+    if (speed < 5) {
+      return 5000;
+    } 
+    if (speed < 10) {
+      return 4000;
+    }
+    if (speed < 15) {
+      return 3750;
+    }
+    if (speed < 20) {
+      return 3500;
+    }
+    if (speed < 25) {
+      return 3250;
+    }
+    if (speed < 35) {
+      return 3000;
+    }
+    return 2000;
   }
 
-  render() {
-    const { tweener, prevColors, colors } = this.state;
-    console.log('prevColors', prevColors)
-    const { style } = this.props;
+  componentDidMount = () => {
+    this.state.customColors = presetColors[this.props.time];
+    this.state.speed = this._getSpeed(this.props.speed);
+    this.startAnimation();
+  }
 
-    const color1Interp = tweener.interpolate({
-      inputRange: [0, 1],
-      outputRange: [prevColors[0], colors[0]]
-    });
+  startAnimation = () => {
+    const {speed, color0, color1, customColors} = this.state;
+    [color0, color1].forEach(color => color.setValue(0));
 
-    const color2Interp = tweener.interpolate({
-      inputRange: [0, 1],
-      outputRange: [prevColors[1], colors[1]]
+    Animated.parallel(
+      [color0, color1].map(animatedColor => {
+        return Animated.timing(animatedColor, {
+          toValue: customColors.length,
+          duration: customColors.length * speed,
+          easing: Easing.linear
+        })
+      })
+    )
+      .start(this.startAnimation);
+
+  };
+
+  render () {
+
+    const {color0, color1, customColors} = this.state;
+    const {children, points, style} = this.props;
+    const preferColors = [];
+    // while (preferColors.length < customColors.length) {
+    while (preferColors.length < 2) {
+      preferColors.push(
+        customColors
+          .slice(preferColors.length)
+          .concat(customColors.slice(0, preferColors.length+1))
+      )
+    }
+    const interpolatedColors = [color0, color1].map((animatedColor, index) => {
+      return animatedColor.interpolate({
+        inputRange: Array.from({length: customColors.length+1}, (v, k) => k),
+        outputRange: preferColors[index]
+      })
     });
 
     return (
-      <AnimatedGradientHelper
-        style={style || styles.component}
-        color1={color1Interp}
-        color2={color2Interp}
-      />
-    );
+      <Animated.LinearGradientComponent
+        style={[styles.linearGradient, style]}
+        points={points}
+        color0={interpolatedColors[0]}
+        color1={interpolatedColors[1]}>
+        {children}
+      </Animated.LinearGradientComponent>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: "transparent"
+  }
+});

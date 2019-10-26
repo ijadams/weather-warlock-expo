@@ -1,7 +1,7 @@
 {
-  "name": "playlist-example",
+  "name": "weather-for-the-blind",
   "version": "3.0.0",
-  "description": "a playlist of some songs that Greg likes to demo the Expo AV API.",
+  "description": "Native app for weather warlock.",
   "author": "expo",
   "keywords": [
     "expo",
@@ -21,7 +21,8 @@
     "moment-timezone": "^0.5.26",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
-    "react-native-linear-gradient": "^2.5.6"
+    "react-native-linear-gradient": "^2.5.6",
+    "rgb2hex": "^0.1.9"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
