@@ -67,7 +67,7 @@ export default class App extends React.Component {
     setInterval(() => {
        this._loadWeatherData();
      }, 60000 );
-    
+
     Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       staysActiveInBackground: false,
@@ -333,13 +333,16 @@ export default class App extends React.Component {
   }
 
   render() {
+    const textColor = this.state.isNight ? '#000' : '#fff';
+    const iconPauseButton = this.state.isNight ? fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module : fromPlaylist.ICON_PAUSE_BUTTON.module;
+    const iconPlayButton = this.state.isNight ? fromPlaylist.ICON_PLAY_BUTTON_WHITE.module : fromPlaylist.ICON_PLAY_BUTTON.module;
     return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
     ) : (
         <AnimatedGradient time={this.state.timeOfDay} speed={this.state.windSpeed}>
         <Weather weather={this.state}></Weather>
         <View style={styles.nameContainer}>
-          <Text style={[styles.text, {fontFamily: "grenze-regular", color: 'rgba(0,0,0,1)', fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
+          <Text style={[styles.text, {fontFamily: "grenze-regular", color: textColor, fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
         </View>
         <View style={styles.videoContainer}>
           <Video
@@ -399,8 +402,8 @@ export default class App extends React.Component {
               style={styles.button}
               source={
                 this.state.isPlaying
-                  ? fromPlaylist.ICON_PAUSE_BUTTON.module
-                  : fromPlaylist.ICON_PLAY_BUTTON.module
+                  ? iconPauseButton
+                  : iconPlayButton
               }
             />
           </TouchableHighlight>

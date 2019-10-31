@@ -37,16 +37,32 @@ export const ICON_PLAY_BUTTON = new Icon(
     34,
     51
 );
+
+export const ICON_PLAY_BUTTON_WHITE = new Icon(
+    require("../assets/images/play_button_custom.png"),
+    34,
+    51
+);
+
 export const ICON_PAUSE_BUTTON = new Icon(
     require("../assets/images/pause_button_custom.png"),
     34,
     51
 );
+
+export const ICON_PAUSE_BUTTON_WHITE = new Icon(
+    require("../assets/images/pause_button_custom_w.png"),
+    34,
+    51
+);
+
 export const ICON_STOP_BUTTON = new Icon(
     require("../assets/images/stop_button.png"),
     22,
     22
 );
+
+
 export const ICON_FORWARD_BUTTON = new Icon(
     require("../assets/images/forward_button.png"),
     33,
