@@ -200,7 +200,7 @@ export default class App extends React.Component {
   }
 
   _getWindBearing(windBearing) {
-      const directions = ['North', 'North-West', 'West', 'South-West', 'South', 'South-East', 'East', 'North-East'];
+      const directions = ['N', 'NW', 'W', 'SW', 'S', 'SE', 'E', 'NE'];
       return directions[Math.round(((windBearing %= 360) < 0 ? windBearing + 360 : windBearing) / 45) % 8];
   }
 

@@ -82,7 +82,7 @@ export class Weather extends React.Component {
                         </Text>
                     </Text>
                     <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Wind Direction
+                        Wind
                         <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
                             {'\n'}{this.props.weather.windBearing}
                         </Text>
@@ -125,8 +125,8 @@ const weatherStyles = StyleSheet.create({
         alignItems: 'flex-start',
         maxWidth: '100%',
         height: 'auto',
-        marginLeft: '25%',
-        marginRight: '25%',
+        marginLeft: '20%',
+        marginRight: '20%',
     },
     text: {
         width: '50%',
