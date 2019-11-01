@@ -26,11 +26,11 @@ export class Weather extends React.Component {
     }
 
     render() {
-        const textColor = this.props.weather.isNight ? '#000' : '#fff';
-        const subTextColor = this.props.weather.isNight ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
+        const textColor = this.props.weather.isDay ? '#000' : '#fff';
+        const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         return (
             <View style={weatherStyles.weatherContainer}>
-                <Image style={styles.logo} source={this.props.weather.isNight ? fromPlaylist.LOGO_WHITE.module : fromPlaylist.LOGO_BLACK.module}/>
+                <Image style={styles.logo} source={this.props.weather.isDay ? fromPlaylist.LOGO_BLACK.module : fromPlaylist.LOGO_WHITE.module}/>
                 <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 24, marginTop: -10, marginBottom: 0, color: textColor}]}>
                     Weather for the Blind
                 </Text>
@@ -42,7 +42,8 @@ export class Weather extends React.Component {
                     fontSize: 20,
                     textAlign: "center",
                     letterSpacing: 1,
-                    marginBottom: 6
+                    marginBottom: 6,
+                    color: textColor
                 }]}>
                     New Orleans, LA
                     <Text style={[weatherStyles.subText, {fontFamily: "grenze-regular", fontSize: 18, textAlign: "center", color: textColor}]}>

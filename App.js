@@ -58,7 +58,7 @@ export default class App extends React.Component {
       fullscreen: false,
       throughEarpiece: false,
       colors: ['rgb(255,255,255)', 'rgb(255,255,255)', 'rgb(255,255,255)'],
-      isNight: false
+      isDay: false
     };
   }
 
@@ -109,7 +109,7 @@ export default class App extends React.Component {
           uvIndex: json.currently.uvIndex,
           weatherLoaded: true,
           timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2)),
-          isNight: this._isNightMode(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2))
+          isDay: this._isDayMode(moment.unix(json.currently.time).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0,2))
         });
         this._updateScreenForLoading();
       });
@@ -149,7 +149,7 @@ export default class App extends React.Component {
     this._updateScreenForLoading(false);
   }
 
-  _isNightMode(currentTime, sunUp, sunDown) {
+  _isDayMode(currentTime, sunUp, sunDown) {
     currentTime = Number(currentTime);
     sunUp = Number(sunUp);
     sunDown = Number(sunDown) + 12;
@@ -333,9 +333,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const textColor = this.state.isNight ? '#000' : '#fff';
-    const iconPauseButton = this.state.isNight ? fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module : fromPlaylist.ICON_PAUSE_BUTTON.module;
-    const iconPlayButton = this.state.isNight ? fromPlaylist.ICON_PLAY_BUTTON_WHITE.module : fromPlaylist.ICON_PLAY_BUTTON.module;
+    const textColor = this.state.isDay ? '#000' : '#fff';
+    const iconPauseButton = this.state.isDay ? fromPlaylist.ICON_PAUSE_BUTTON.module : fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module;
+    const iconPlayButton = this.state.isDay ? fromPlaylist.ICON_PLAY_BUTTON.module : fromPlaylist.ICON_PLAY_BUTTON_WHITE.module;
     return !this.state.fontLoaded || !this.state.weatherLoaded ? (
       <View style={styles.emptyContainer} />
     ) : (
@@ -368,7 +368,7 @@ export default class App extends React.Component {
                   style={[
                       styles.text,
                       styles.buffering,
-                      {fontFamily: "roboto-regular"}
+                      {fontFamily: "roboto-regular", color: textColor}
                   ]}
               >
                   {this.state.isBuffering ? BUFFERING_STRING : ""}
@@ -393,7 +393,7 @@ export default class App extends React.Component {
           ]}
         >
           <TouchableHighlight
-            underlayColor={styles.BACKGROUND_COLOR}
+            underlayColor={'rgba(0,0,0,0)'}
             style={styles.wrapper}
             onPress={this._onPlayPausePressed}
             disabled={this.state.isLoading}
@@ -416,7 +416,7 @@ export default class App extends React.Component {
         >
           <View style={styles.volumeContainer}>
             <TouchableHighlight
-              underlayColor={styles.BACKGROUND_COLOR}
+              underlayColor={'rgba(0,0,0,0)'}
               style={styles.wrapper}
               onPress={this._onMutePressed}
             >

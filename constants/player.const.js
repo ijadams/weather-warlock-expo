@@ -39,7 +39,7 @@ export const ICON_PLAY_BUTTON = new Icon(
 );
 
 export const ICON_PLAY_BUTTON_WHITE = new Icon(
-    require("../assets/images/play_button_custom.png"),
+    require("../assets/images/play_button_custom_w.png"),
     34,
     51
 );
