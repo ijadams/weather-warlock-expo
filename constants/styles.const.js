@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     buttonsContainerTopRow: {
         maxHeight: ICON_PLAY_BUTTON.height,
@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 30
+        marginBottom: 50
     },
     buttonsContainerMiddleRow: {
         maxHeight: ICON_MUTED_BUTTON.height,

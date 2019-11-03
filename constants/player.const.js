@@ -13,7 +13,7 @@ export class PlaylistItem {
 export const PLAYLIST = [
     new PlaylistItem(
         "Live Stream",
-        "http://edge.mixlr.com/channel/ggrvi",
+        "http://edge.mixlr.com/channel/rovhv",
         false
     )
 ];
@@ -33,25 +33,25 @@ export class Icon {
 }
 
 export const ICON_PLAY_BUTTON = new Icon(
-    require("../assets/images/play_button_custom.png"),
+    require("../assets/images/play_germanic_b.png"),
     34,
     51
 );
 
 export const ICON_PLAY_BUTTON_WHITE = new Icon(
-    require("../assets/images/play_button_custom_w.png"),
+    require("../assets/images/play_germanic_w.png"),
     34,
     51
 );
 
 export const ICON_PAUSE_BUTTON = new Icon(
-    require("../assets/images/pause_button_custom.png"),
+    require("../assets/images/pause_germanic_b.png"),
     34,
     51
 );
 
 export const ICON_PAUSE_BUTTON_WHITE = new Icon(
-    require("../assets/images/pause_button_custom_w.png"),
+    require("../assets/images/pause_germanic_w.png"),
     34,
     51
 );

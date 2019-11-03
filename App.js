@@ -292,18 +292,6 @@ export default class App extends React.Component {
     }
   };
 
-  _onMutePressed = () => {
-    if (this.playbackInstance != null) {
-      this.playbackInstance.setIsMutedAsync(!this.state.muted);
-    }
-  };
-
-  _onVolumeSliderValueChange = value => {
-    if (this.playbackInstance != null) {
-      this.playbackInstance.setVolumeAsync(value);
-    }
-  };
-
   _getMMSSFromMillis(millis) {
     const totalSeconds = millis / 1000;
     const seconds = Math.floor(totalSeconds % 60);
@@ -407,36 +395,6 @@ export default class App extends React.Component {
               }
             />
           </TouchableHighlight>
-        </View>
-        <View
-          style={[
-            styles.buttonsContainerBase,
-            styles.buttonsContainerMiddleRow
-          ]}
-        >
-          <View style={styles.volumeContainer}>
-            <TouchableHighlight
-              underlayColor={'rgba(0,0,0,0)'}
-              style={styles.wrapper}
-              onPress={this._onMutePressed}
-            >
-              <Image
-                style={styles.button}
-                source={
-                  this.state.muted
-                    ? fromPlaylist.ICON_MUTED_BUTTON.module
-                    : fromPlaylist.ICON_UNMUTED_BUTTON.module
-                }
-              />
-            </TouchableHighlight>
-            <Slider
-              style={styles.volumeSlider}
-              trackImage={fromPlaylist.ICON_TRACK_1.module}
-              thumbImage={fromPlaylist.ICON_THUMB_2.module}
-              value={1}
-              onValueChange={this._onVolumeSliderValueChange}
-            />
-          </View>
         </View>
       </AnimatedGradient>
     );
