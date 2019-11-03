@@ -328,11 +328,17 @@ export default class App extends React.Component {
       <View style={styles.emptyContainer} />
     ) : (
         <AnimatedGradient time={this.state.timeOfDay} speed={this.state.windSpeed}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={this.state.isDay ? fromPlaylist.LOGO_BLACK.module : fromPlaylist.LOGO_WHITE.module}/>
+            <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 24, marginTop: -10, marginBottom: 0, color: textColor}]}>
+                Weather for the Blind
+            </Text>
+          </View>
         <Weather weather={this.state}></Weather>
+        <View style={styles.videoContainer}>
         <View style={styles.nameContainer}>
           <Text style={[styles.text, {fontFamily: "grenze-regular", color: textColor, fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
         </View>
-        <View style={styles.videoContainer}>
           <Video
             ref={this._mountVideo}
             style={[

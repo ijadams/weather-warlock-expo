@@ -30,10 +30,6 @@ export class Weather extends React.Component {
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         return (
             <View style={weatherStyles.weatherContainer}>
-                <Image style={styles.logo} source={this.props.weather.isDay ? fromPlaylist.LOGO_BLACK.module : fromPlaylist.LOGO_WHITE.module}/>
-                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 24, marginTop: -10, marginBottom: 0, color: textColor}]}>
-                    Weather for the Blind
-                </Text>
                 <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 100, marginTop: -30, marginBottom: 0, color: textColor}]}>
                     {this.props.weather.temperature}°
                 </Text>
@@ -110,6 +106,7 @@ const weatherStyles = StyleSheet.create({
     weatherContainer: {
         justifyContent: "center",
         alignItems: "center",
+        alignSelf: "center"
     },
     logo: {
         backgroundColor: "transparent",

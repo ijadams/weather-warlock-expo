@@ -4,6 +4,8 @@ import {StyleSheet, StatusBar, Dimensions, View, Animated, Easing} from 'react-n
 import {LinearGradient} from 'expo-linear-gradient';
 import rgb2hex from 'rgb2hex';
 
+const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
+
 class LinearGradientComponent extends Component {
     render() {
         const {color0, color1, children, points} = this.props;
@@ -143,6 +145,8 @@ export class AnimatedGradient extends Component {
 
 const styles = StyleSheet.create({
     linearGradient: {
+        height: DEVICE_HEIGHT,
+        width: DEVICE_WIDTH,
         flex: 1,
         flexDirection: "column",
         justifyContent: "space-between",

@@ -30,9 +30,18 @@ export const styles = StyleSheet.create({
         backgroundColor: BACKGROUND_COLOR
     },
     wrapper: {},
-    nameContainer: {
+    logoContainer: {
+        textAlign: "center",
         marginTop: 10,
         height: 'auto',
+        width: 'auto',
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center"
+    },
+    nameContainer: {
+        marginTop: 10,
+        height: 20,
     },
     space: {
         height: FONT_SIZE
