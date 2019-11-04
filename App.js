@@ -336,9 +336,9 @@ export default class App extends React.Component {
           </View>
         <Weather weather={this.state}></Weather>
         <View style={styles.videoContainer}>
-        <View style={styles.nameContainer}>
-          <Text style={[styles.text, {fontFamily: "grenze-regular", color: textColor, fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
-        </View>
+          <View style={styles.nameContainer}>
+           <Text style={[styles.text, {fontFamily: "grenze-regular", color: textColor, fontSize: 16}]}>... {this.state.playbackInstanceName} ...</Text>
+          </View>
           <Video
             ref={this._mountVideo}
             style={[
@@ -358,50 +358,41 @@ export default class App extends React.Component {
           />
         </View>
           <View style={styles.timestampRow}>
-              <Text
-                  style={[
-                      styles.text,
-                      styles.buffering,
-                      {fontFamily: "roboto-regular", color: textColor}
-                  ]}
-              >
-                  {this.state.isBuffering ? BUFFERING_STRING : ""}
-              </Text>
-              <Text
-                  style={[
-                      styles.text,
-                      styles.timestamp,
-                      {fontFamily: "roboto-regular"}
-                  ]}
-              >
-                  {this._getTimestamp()}
-              </Text>
+            <Text
+                style={[
+                    styles.text,
+                    styles.buffering,
+                    {fontFamily: "roboto-regular", color: textColor}
+                ]}
+            >
+                {this.state.isBuffering ? BUFFERING_STRING : ""}
+            </Text>
           </View>
-        <View
-          style={[
-            styles.buttonsContainerBase,
-            styles.buttonsContainerTopRow,
-            {
-              opacity: this.state.isLoading ? styles.DISABLED_OPACITY : 1.0
-            }
-          ]}
-        >
-          <TouchableHighlight
-            underlayColor={'rgba(0,0,0,0)'}
-            style={styles.wrapper}
-            onPress={this._onPlayPausePressed}
-            disabled={this.state.isLoading}
-          >
-            <Image
-              style={styles.button}
-              source={
-                this.state.isPlaying
-                  ? iconPauseButton
-                  : iconPlayButton
+          <View
+            style={[
+              styles.buttonsContainerBase,
+              styles.buttonsContainerTopRow,
+              {
+                opacity: this.state.isLoading ? styles.DISABLED_OPACITY : 1.0
               }
-            />
-          </TouchableHighlight>
-        </View>
+            ]}
+          >
+            <TouchableHighlight
+              underlayColor={'rgba(0,0,0,0)'}
+              style={styles.wrapper}
+              onPress={this._onPlayPausePressed}
+              disabled={this.state.isLoading}
+            >
+              <Image
+                style={styles.button}
+                source={
+                  this.state.isPlaying
+                    ? iconPauseButton
+                    : iconPlayButton
+                }
+              />
+            </TouchableHighlight>
+          </View>
       </AnimatedGradient>
     );
   }

@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     logoContainer: {
         textAlign: "center",
         marginTop: 10,
-        height: 'auto',
+        height: 150,
         width: 'auto',
         justifyContent: "center",
         alignItems: "center",
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
         height: FONT_SIZE
     },
     videoContainer: {
-        height: 0,
+        height: 'auto',
     },
     video: {
         maxWidth: DEVICE_WIDTH
@@ -95,6 +95,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+        height: 55
     },
     buttonsContainerTopRow: {
         maxHeight: ICON_PLAY_BUTTON.height,
