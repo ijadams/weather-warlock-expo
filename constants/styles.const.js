@@ -30,6 +30,9 @@ export const styles = StyleSheet.create({
         backgroundColor: BACKGROUND_COLOR
     },
     wrapper: {},
+    playerContainer: {
+        marginTop: -20
+    },
     logoContainer: {
         textAlign: "center",
         marginTop: 10,
@@ -40,14 +43,16 @@ export const styles = StyleSheet.create({
         alignSelf: "center"
     },
     nameContainer: {
-        marginTop: 10,
-        height: 20,
+        height: 'auto',
+        marginTop: -150
     },
     space: {
         height: FONT_SIZE
     },
     videoContainer: {
-        height: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     video: {
         maxWidth: DEVICE_WIDTH
@@ -81,7 +86,7 @@ export const styles = StyleSheet.create({
         textAlign: "right"
     },
     button: {
-        backgroundColor: BACKGROUND_COLOR
+        backgroundColor: BACKGROUND_COLOR,
     },
     logo: {
         backgroundColor: "transparent",
@@ -91,29 +96,10 @@ export const styles = StyleSheet.create({
         height: 32
     },
     buttonsContainerBase: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: 55
-    },
-    buttonsContainerTopRow: {
-        maxHeight: ICON_PLAY_BUTTON.height,
-        height: 'auto',
-        width: '100%',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 50
-    },
-    buttonsContainerMiddleRow: {
-        maxHeight: ICON_MUTED_BUTTON.height,
-        height: 'auto',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: 10
     },
     volumeContainer: {
         flex: 1,

@@ -1,12 +1,16 @@
 import React from 'react';
+
 import {styles} from '../constants/styles.const';
-import * as fromPlaylist from '../constants/player.const';
 import {
     View,
-    Image,
+    Dimensions,
+    ScrollView,
     Text,
     StyleSheet
 } from "react-native";
+
+const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
+
 import moment from 'moment-timezone';
 
 export class Weather extends React.Component {
@@ -30,7 +34,13 @@ export class Weather extends React.Component {
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         return (
             <View style={weatherStyles.weatherContainer}>
-                <Text style={[styles.text, {fontFamily: "grenze-regular", fontSize: 100, marginTop: -30, marginBottom: 0, color: textColor}]}>
+                <Text style={[styles.text, {
+                    fontFamily: "grenze-regular",
+                    fontSize: 100,
+                    marginTop: -30,
+                    marginBottom: 0,
+                    color: textColor
+                }]}>
                     {this.props.weather.temperature}°
                 </Text>
                 <Text style={[styles.text, {
@@ -42,61 +52,61 @@ export class Weather extends React.Component {
                     color: textColor
                 }]}>
                     New Orleans, LA
-                    <Text style={[weatherStyles.subText, {fontFamily: "grenze-regular", fontSize: 18, textAlign: "center", color: textColor}]}>
+                    <Text style={[weatherStyles.subText, {
+                        fontFamily: "grenze-regular",
+                        fontSize: 18,
+                        textAlign: "center",
+                        color: textColor
+                    }]}>
                         {'\n'}{this.state.time}
                     </Text>
                 </Text>
                 <View style={weatherStyles.container}>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Conditions
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.summary}
+                    <ScrollView horizontal>
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Conditions
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.summary}
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Humidity
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.humidity}%
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Humidity
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.humidity}%
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Humidity
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.humidity}%
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Wind Speed
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.windSpeed}mph
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Wind Speed
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.windSpeed}mph
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Percipitation
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.precipProbability}%
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Percipitation
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.precipProbability}%
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Wind
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.windBearing}
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Wind
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.windBearing}
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            Pressure
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.pressure}mb
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        Pressure
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.pressure}mb
+                        <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
+                            UV Index
+                            <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
+                                {'\n'}{this.props.weather.uvIndex}
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
-                        UV Index
-                        <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
-                            {'\n'}{this.props.weather.uvIndex}
-                        </Text>
-                    </Text>
+                    </ScrollView>
                 </View>
-
             </View>
         );
     }
@@ -104,6 +114,8 @@ export class Weather extends React.Component {
 
 const weatherStyles = StyleSheet.create({
     weatherContainer: {
+        height: 'auto',
+        marginTop: -100,
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center"
@@ -119,18 +131,22 @@ const weatherStyles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         maxWidth: '100%',
-        height: 'auto',
-        marginLeft: '20%',
-        marginRight: '20%',
+        justifyContent: 'center',
+        height: 50,
+        borderColor: 'rgba(255,255,255,.20)',
+        borderStyle: 'solid',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
     },
     text: {
-        width: '50%',
         color: 'rgba(0,0,0,0.8)',
-        marginBottom: 6,
         textAlign: 'center',
-        fontSize: 12
+        alignSelf: 'center',
+        fontSize: 12,
+        marginRight: 12,
+        marginLeft: 12
     },
     item: {
         width: '100%',

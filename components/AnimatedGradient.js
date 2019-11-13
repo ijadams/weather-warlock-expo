@@ -13,7 +13,6 @@ class LinearGradientComponent extends Component {
         const gEnd = points.end;
         return (
             <LinearGradient
-                // colors={this.props.colors.map((c) => rgb2hex(c).hex)}
                 colors={[color0, color1].map((c) => rgb2hex(c).hex)}
                 start={gStart}
                 end={gEnd}
