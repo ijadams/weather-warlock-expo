@@ -308,16 +308,7 @@ export default class App extends React.Component {
     }
 
     _getTimestamp() {
-        if (
-            this.playbackInstance != null &&
-            this.state.playbackInstancePosition != null &&
-            this.state.playbackInstanceDuration != null
-        ) {
-            return `${this._getMMSSFromMillis(
-                this.state.playbackInstancePosition
-            )} / ${this._getMMSSFromMillis(this.state.playbackInstanceDuration)}`;
-        }
-        return "";
+        return this.playbackInstance !== null;
     }
 
     render() {
@@ -348,8 +339,9 @@ export default class App extends React.Component {
                             <Text style={[styles.text, {
                                 fontFamily: "grenze-regular",
                                 color: textColor,
-                                fontSize: 16
-                            }]}>... {this.state.playbackInstanceName} ...</Text>
+                                fontSize: 16,
+                                opacity: this.state.isBuffering || !this._getTimestamp() ? 0.5 : 1
+                            }]}>... {this.state.playbackInstanceName} ... </Text>
                         </View>
                         <Video
                             ref={this._mountVideo}
@@ -368,23 +360,12 @@ export default class App extends React.Component {
                             onReadyForDisplay={this._onReadyForDisplay}
                             useNativeControls={this.state.useNativeControls}
                         />
-                        <View style={styles.timestampRow}>
-                            <Text
-                                style={[
-                                    styles.text,
-                                    styles.buffering,
-                                    {fontFamily: "roboto-regular", color: textColor}
-                                ]}
-                            >
-                                {this.state.isBuffering ? BUFFERING_STRING : ""}
-                            </Text>
-                        </View>
                     </View>
                     <View
                         style={[
                             styles.buttonsContainerBase,
                             {
-                                opacity: this.state.isLoading || !this.state.playbackInstancePosition ? 0.5 : 1.0
+                                opacity: this.state.isLoading ? 0.5 : 1.0
                             }
                         ]}
                     >
@@ -396,7 +377,7 @@ export default class App extends React.Component {
                         >
                             <Image
                                 style={[styles.button, {
-                                    opacity: this.state.playbackInstancePosition ? 0.5 : 1
+                                    opacity: this._getTimestamp() ? 1 : 0.5
                                 }]}
                                 source={
                                     this.state.isPlaying

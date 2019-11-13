@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     },
     nameContainer: {
         height: 'auto',
-        marginTop: -150
+        paddingBottom: 30
     },
     space: {
         height: FONT_SIZE

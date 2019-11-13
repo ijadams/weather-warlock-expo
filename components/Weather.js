@@ -62,7 +62,7 @@ export class Weather extends React.Component {
                     </Text>
                 </Text>
                 <View style={weatherStyles.container}>
-                    <ScrollView horizontal>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
                             Conditions
                             <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
@@ -115,7 +115,6 @@ export class Weather extends React.Component {
 const weatherStyles = StyleSheet.create({
     weatherContainer: {
         height: 'auto',
-        marginTop: -100,
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center"
