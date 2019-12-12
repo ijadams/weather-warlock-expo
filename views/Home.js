@@ -330,18 +330,19 @@ export class HomeView extends React.Component {
                     }]}>
                         Weather for the Blind
                     </Text>
+                    <View style={styles.nameContainer}>
+                        <Text style={[styles.text, {
+                            textTransform: 'lowercase',
+                            fontFamily: "grenze-regular",
+                            color: textColor,
+                            fontSize: 16,
+                            opacity: this.state.isBuffering || !this._getTimestamp() ? 0.5 : 1
+                        }]}>... {this.state.playbackInstanceName} ... </Text>
+                    </View>
                 </View>
                 <Weather weather={this.state}></Weather>
                 <View style={styles.playerContainer}>
                     <View style={styles.videoContainer}>
-                        <View style={styles.nameContainer}>
-                            <Text style={[styles.text, {
-                                fontFamily: "grenze-regular",
-                                color: textColor,
-                                fontSize: 16,
-                                opacity: this.state.isBuffering || !this._getTimestamp() ? 0.5 : 1
-                            }]}>... {this.state.playbackInstanceName} ... </Text>
-                        </View>
                         <Video
                             ref={this._mountVideo}
                             style={[
