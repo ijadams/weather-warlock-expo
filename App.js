@@ -12,7 +12,9 @@ export default class App extends React.Component {
             <View style={styles.container}>
                 <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
 
-                    <HomeView></HomeView>
+                <View style={styles.homeView}>
+                        <HomeView></HomeView>
+                    </View>
 
                     <View style={styles.secondView}>
                         <Text style={styles.headerText}>Second View</Text>
@@ -37,6 +39,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#fff',
+    },
+    homeView: {
+        width: DEVICE_WIDTH,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     secondView: {
         width: DEVICE_WIDTH,
