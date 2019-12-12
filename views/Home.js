@@ -32,6 +32,7 @@ export class HomeView extends React.Component {
             playbackInstanceName: LOADING_STRING,
             loopingType: fromPlaylist.LOOPING_TYPE_ALL,
             muted: false,
+            circleFillHeight: '0',
             playbackInstancePosition: null,
             playbackInstanceDuration: null,
             shouldPlay: false,
@@ -107,6 +108,7 @@ export class HomeView extends React.Component {
                     pressure: json.currently.pressure,
                     uvIndex: json.currently.uvIndex,
                     weatherLoaded: true,
+                    circleFillHeight: this._getCircleFill(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
                     timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
                     isDay: this._isDayMode(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2))
                 });
@@ -153,6 +155,18 @@ export class HomeView extends React.Component {
         sunUp = Number(sunUp);
         sunDown = Number(sunDown) + 12;
         return currentTime >= sunUp && currentTime <= sunDown;
+    }
+
+    _getCircleFill(currentTime, sunUp, sunDown) {
+        currentTime = Number(currentTime);
+        sunUp = Number(sunUp);
+        sunDown = Number(sunDown) + 12;
+        const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
+        if (isDayTime) {
+            return (sunUp - sunDown) / currentTime;
+        } else {
+            return (sunDown - sunUp) / currentTime;
+        }
     }
 
     _getTimeOfDay(currentTime, sunUp, sunDown) {

@@ -34,15 +34,22 @@ export class Weather extends React.Component {
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         return (
             <View style={weatherStyles.weatherContainer}>
-                <Text style={[styles.text, {
-                    fontFamily: "grenze-regular",
-                    fontSize: 100,
-                    marginTop: -30,
-                    marginBottom: 0,
-                    color: textColor
-                }]}>
-                    {this.props.weather.temperature}°
-                </Text>
+                <View style={weatherStyles.circle}>
+                    <View style={[weatherStyles.circleFill]}>
+                    </View>
+                    <View style={[weatherStyles.circleTextContainer]}>
+                        <Text style={[styles.circleText, {
+                                textAlign: 'center',
+                                fontFamily: "grenze-regular",
+                                fontSize: 100,
+                                letterSpacing: -3,
+                                paddingLeft: 20,
+                                color: textColor
+                                }]}>
+                                {this.props.weather.temperature}°
+                        </Text>
+                    </View>
+                </View>
                 <Text style={[styles.text, {
                     fontFamily: "grenze-regular",
                     fontSize: 20,
@@ -154,5 +161,40 @@ const weatherStyles = StyleSheet.create({
     subText: {
         fontSize: 14,
         color: 'rgba(0,0,0,1)'
-    }
+    },
+    circle: {
+        width: 196,
+        height: 196,
+        borderRadius: 196 / 2,
+        borderWidth: 2,
+        borderColor: '#000000',
+        overflow: 'hidden',
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginBottom: 15
+      },
+      circleFill: {
+        backgroundColor: '#f39c12',
+        width: '100%',
+        bottom: 0,
+        position: 'absolute',
+        zIndex: 0,
+        height: '100%'
+      },
+      circleText: {
+          backgroundColor: 'transparent'
+      },
+      circleTextContainer: {
+          position: 'absolute',
+          zIndex: 0,
+          bottom: 10,
+          backgroundColor: 'rgba(0,0,0,0)',
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          alignContent: 'center',
+          justifyContent: 'center',
+          textAlign: 'center'
+      }
 });
