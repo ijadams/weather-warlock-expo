@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 50
+        marginBottom: 25
     },
     volumeContainer: {
         flex: 1,
