@@ -6,12 +6,13 @@ import {
     Dimensions,
     ScrollView,
     Text,
-    StyleSheet
+    StyleSheet, Image, TouchableHighlight
 } from "react-native";
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
 import moment from 'moment-timezone';
+import * as fromPlaylist from "../constants/player.const";
 
 export class Weather extends React.Component {
     constructor(props) {
@@ -32,6 +33,8 @@ export class Weather extends React.Component {
     render() {
         const textColor = this.props.weather.isDay ? '#000' : '#fff';
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
+        const iconPauseButton = this.props.weather.isDay ? fromPlaylist.ICON_PAUSE_BUTTON.module : fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module;
+        const iconPlayButton = this.props.weather.isDay ? fromPlaylist.ICON_PLAY_BUTTON.module : fromPlaylist.ICON_PLAY_BUTTON_WHITE.module;
         return (
             <View style={weatherStyles.weatherContainer}>
                 <View style={weatherStyles.circle}>
@@ -125,6 +128,15 @@ const weatherStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center"
+    },
+    wrapper: {
+        alignSelf: 'center',
+        textAlign: 'center'
+    },
+    button: {
+        width: 25,
+        height: 30,
+        resizeMode: 'stretch',
     },
     logo: {
         backgroundColor: "transparent",

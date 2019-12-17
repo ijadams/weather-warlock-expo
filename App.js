@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 
-import {HomeView} from './views/Home';
+import {HomeView} from './views/HomeView';
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
