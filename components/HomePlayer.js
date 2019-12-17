@@ -13,7 +13,6 @@ import * as fromPlaylist from '../constants/player.const';
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
-const BUFFERING_STRING = "...buffering...";
 const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
 
 
@@ -231,7 +230,7 @@ export class HomePlayer extends React.Component {
                 </View>
                 <View
                     style={[
-                        styles.buttonsContainerBase,
+                        playerStyles.buttonsContainerBase,
                         {
                             opacity: this.state.isLoading ? 0.5 : 1.0
                         }
@@ -239,12 +238,12 @@ export class HomePlayer extends React.Component {
                 >
                     <TouchableHighlight
                         underlayColor={'rgba(0,0,0,0)'}
-                        style={styles.wrapper}
+                        style={playerStyles.wrapper}
                         onPress={this._onPlayPausePressed}
                         disabled={this.state.isLoading}
                     >
                         <Image
-                            style={[styles.button, {
+                            style={[playerStyles.button, {
                                 opacity: this._getTimestamp() ? 1 : 0.5
                             }]}
                             source={
@@ -261,5 +260,17 @@ export class HomePlayer extends React.Component {
 }
 
 
-const playerStyles = StyleSheet.create({});
+const playerStyles = StyleSheet.create({
+    buttonsContainerBase: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 25
+    },
+    wrapper: {},
+    button: {
+        width: 50,
+        height: 50
+    }
+});
 

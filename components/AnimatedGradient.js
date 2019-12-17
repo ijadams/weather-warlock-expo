@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {StyleSheet, StatusBar, Dimensions, View, Animated, Easing} from 'react-native';
+import {StyleSheet, Dimensions, Animated, Easing} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import rgb2hex from 'rgb2hex';
 
-const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
+const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
 class LinearGradientComponent extends Component {
     render() {
@@ -60,7 +59,7 @@ export class AnimatedGradient extends Component {
 
     state = {
         speed: 4000,
-        customColors: presetColors.day,
+        customColors: presetColors[this.props.time],
         color0: new Animated.Value(0),
         color1: new Animated.Value(0),
     }
@@ -87,7 +86,7 @@ export class AnimatedGradient extends Component {
         return 2000;
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.state.customColors = presetColors[this.props.time];
         this.state.speed = this._getSpeed(this.props.speed);
         this.startAnimation();
@@ -115,7 +114,6 @@ export class AnimatedGradient extends Component {
         const {color0, color1, customColors} = this.state;
         const {children, points, style} = this.props;
         const preferColors = [];
-        // while (preferColors.length < customColors.length) {
         while (preferColors.length < 2) {
             preferColors.push(
                 customColors

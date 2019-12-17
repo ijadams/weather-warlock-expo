@@ -10,7 +10,7 @@ export default class App extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false} bounces={false}>
 
                 <View style={styles.homeView}>
                         <HomeView></HomeView>
