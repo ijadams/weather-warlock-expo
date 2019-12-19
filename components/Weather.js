@@ -29,10 +29,12 @@ export class Weather extends React.Component {
     render() {
         const textColor = this.props.weather.isDay ? '#000' : '#fff';
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
+        const circleFillColor = this.props.weather.isDay ? '#f39c12' : 'rgb(254, 250, 212)';
+        const circleTextColor = this.props.weather.isDay ? '#000' :  '#c8d6e5';
         return (
             <View style={weatherStyles.weatherContainer}>
                 <View style={weatherStyles.circle}>
-                    <View style={[weatherStyles.circleFill]}>
+                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: this.props.weather.circleFillHeight}]}>
                     </View>
                     <View style={[weatherStyles.circleTextContainer]}>
                         <Text style={[styles.circleText, {
@@ -41,7 +43,7 @@ export class Weather extends React.Component {
                                 fontSize: 100,
                                 letterSpacing: -3,
                                 paddingLeft: 20,
-                                color: textColor
+                                color: circleTextColor
                                 }]}>
                                 {this.props.weather.temperature}°
                         </Text>
@@ -181,8 +183,6 @@ const weatherStyles = StyleSheet.create({
         marginBottom: 15
       },
       circleFill: {
-        backgroundColor: '#f39c12',
-        width: '100%',
         bottom: 0,
         position: 'absolute',
         zIndex: 0,

@@ -81,6 +81,7 @@ export class HomeView extends React.Component {
                         time: moment.unix(json.currently.time).format('h:mma'),
                         pressure: json.currently.pressure,
                         uvIndex: json.currently.uvIndex,
+                        moonPhase: json.currently.moonPhase,
                         weatherLoaded: true,
                         circleFillHeight: this._getCircleFill(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
                         timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
@@ -103,9 +104,9 @@ export class HomeView extends React.Component {
         sunDown = Number(sunDown) + 12;
         const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
         if (isDayTime) {
-            return (sunUp - sunDown) / currentTime;
+            return '100%';
         } else {
-            return (sunDown - sunUp) / currentTime;
+            return parseFloat(this.state.weather.moonPhase * 10).toFixed(0)+"%";
         }
     }
 
@@ -114,8 +115,8 @@ export class HomeView extends React.Component {
         sunUp = Number(sunUp);
         sunDown = Number(sunDown) + 12;
         const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
-        const isDawn = Math.abs(sunUp - currentTime) <= 2;
-        const isDusk = Math.abs(sunDown - currentTime) <= 2;
+        const isDawn = Math.abs(sunUp - currentTime) <= 1;
+        const isDusk = Math.abs(sunDown - currentTime) <= 1;
         if (isDawn) {
             return 'dawn';
         }
