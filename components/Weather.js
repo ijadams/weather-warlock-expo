@@ -26,15 +26,40 @@ export class Weather extends React.Component {
         }, 1000);
     }
 
+    getCircleFillWidth() {
+        let moonPhase = this.props.weather.moonPhase;
+        moonPhase = 0.5;
+        if (this.props.weather.isDay) {
+            return '100%';
+        }
+        if (moonPhase === 1) {
+            return '0%';
+        }
+        if (moonPhase <= 0.5) {
+            return parseFloat(moonPhase * 200).toFixed(0)+"%";
+        }
+        return '100%';
+    }
+
+    getCircleFillLeft() {
+        if (this.props.weather.moonPhase > 0.5 && this.props.weather.moonPhase < 1) {
+            return parseFloat(this.props.weather.moonPhase * 200).toFixed(0)+"%";
+        } else {
+            return '0%';
+        }
+    }
+
     render() {
         const textColor = this.props.weather.isDay ? '#000' : '#fff';
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         const circleFillColor = this.props.weather.isDay ? '#f39c12' : 'rgb(254, 250, 212)';
-        const circleTextColor = this.props.weather.isDay ? '#000' :  '#c8d6e5';
+        const circleTextColor = this.props.weather.isDay ? '#000' :  '#808e9b';
+        const circleFillWidth = this.getCircleFillWidth();
+        const circleFillLeft = this.getCircleFillLeft();
         return (
             <View style={weatherStyles.weatherContainer}>
-                <View style={weatherStyles.circle}>
-                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: this.props.weather.circleFillHeight}]}>
+                <View style={[weatherStyles.circle, {borderColor: circleFillColor}]}>
+                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: circleFillWidth, left: circleFillLeft}]}>
                     </View>
                     <View style={[weatherStyles.circleTextContainer]}>
                         <Text style={[styles.circleText, {
@@ -175,7 +200,6 @@ const weatherStyles = StyleSheet.create({
         height: 196,
         borderRadius: 196 / 2,
         borderWidth: 2,
-        borderColor: '#000000',
         overflow: 'hidden',
         display: 'flex',
         alignContent: 'center',

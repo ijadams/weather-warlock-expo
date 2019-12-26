@@ -19,7 +19,6 @@ export class HomeView extends React.Component {
         this.index = 0;
         this.state = {
             playbackInstanceName: fromPlaylist.PLAYLIST[this.index].name,
-            circleFillHeight: '0',
             shouldPlay: false,
             isPlaying: false,
             isBuffering: false,
@@ -37,7 +36,6 @@ export class HomeView extends React.Component {
                 pressure: LOADING_STRING,
                 uvIndex: LOADING_STRING,
                 weatherLoaded: false,
-                circleFillHeight: '0',
                 timeOfDay: null,
                 isDay: false
             }
@@ -69,7 +67,6 @@ export class HomeView extends React.Component {
         )
             .then(res => res.json())
             .then(json => {
-
                 this.setState({
                     weather: {
                         summary: json.currently.summary,
@@ -81,9 +78,8 @@ export class HomeView extends React.Component {
                         time: moment.unix(json.currently.time).format('h:mma'),
                         pressure: json.currently.pressure,
                         uvIndex: json.currently.uvIndex,
-                        moonPhase: json.currently.moonPhase,
+                        moonPhase: json.daily.data[0].moonPhase,
                         weatherLoaded: true,
-                        circleFillHeight: this._getCircleFill(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
                         timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
                         isDay: this._isDayMode(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2))
                     }
@@ -96,18 +92,6 @@ export class HomeView extends React.Component {
         sunUp = Number(sunUp);
         sunDown = Number(sunDown) + 12;
         return currentTime >= sunUp && currentTime <= sunDown;
-    }
-
-    _getCircleFill(currentTime, sunUp, sunDown) {
-        currentTime = Number(currentTime);
-        sunUp = Number(sunUp);
-        sunDown = Number(sunDown) + 12;
-        const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
-        if (isDayTime) {
-            return '100%';
-        } else {
-            return parseFloat(this.state.weather.moonPhase * 10).toFixed(0)+"%";
-        }
     }
 
     _getTimeOfDay(currentTime, sunUp, sunDown) {
