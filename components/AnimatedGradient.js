@@ -45,6 +45,7 @@ export const presetColors = {
     night: [
         'rgb(0, 0, 0)',
         'rgb(25, 25, 25)',
+        'rgb(50, 50, 50)',
     ]
 };
 
@@ -65,25 +66,30 @@ export class AnimatedGradient extends Component {
     }
 
     _getSpeed(speed) {
+        console.log('speed', speed);
+        return 3000;
         if (speed < 5) {
-            return 5000;
-        }
-        if (speed < 10) {
-            return 4000;
-        }
-        if (speed < 15) {
-            return 3750;
-        }
-        if (speed < 20) {
             return 3500;
         }
-        if (speed < 25) {
-            return 3250;
-        }
-        if (speed < 35) {
+        if (speed < 8) {
             return 3000;
         }
-        return 2000;
+        if (speed < 12) {
+            return 2750;
+        }
+        if (speed < 15) {
+            return 2500;
+        }
+        if (speed < 20) {
+            return 2250;
+        }
+        if (speed < 25) {
+            return 2000;
+        }
+        if (speed < 35) {
+            return 1500;
+        }
+        return 1000;
     }
 
     componentDidMount() {

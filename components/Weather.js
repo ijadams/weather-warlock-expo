@@ -26,9 +26,7 @@ export class Weather extends React.Component {
         }, 1000);
     }
 
-    getCircleFillWidth() {
-        let moonPhase = this.props.weather.moonPhase;
-        moonPhase = 0.5;
+    getCircleFillWidth(moonPhase) {
         if (this.props.weather.isDay) {
             return '100%';
         }
@@ -41,9 +39,9 @@ export class Weather extends React.Component {
         return '100%';
     }
 
-    getCircleFillLeft() {
-        if (this.props.weather.moonPhase > 0.5 && this.props.weather.moonPhase < 1) {
-            return parseFloat(this.props.weather.moonPhase * 200).toFixed(0)+"%";
+    getCircleFillLeft(moonPhase) {
+        if (moonPhase > 0.5 && moonPhase < 1) {
+            return parseFloat(moonPhase * 100).toFixed(0)+"%";
         } else {
             return '0%';
         }
@@ -54,12 +52,12 @@ export class Weather extends React.Component {
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         const circleFillColor = this.props.weather.isDay ? '#f39c12' : 'rgb(254, 250, 212)';
         const circleTextColor = this.props.weather.isDay ? '#000' :  '#808e9b';
-        const circleFillWidth = this.getCircleFillWidth();
-        const circleFillLeft = this.getCircleFillLeft();
+        const moonPhase = this.props.weather.moonPhase;
+
         return (
             <View style={weatherStyles.weatherContainer}>
                 <View style={[weatherStyles.circle, {borderColor: circleFillColor}]}>
-                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: circleFillWidth, left: circleFillLeft}]}>
+                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: this.getCircleFillWidth(moonPhase), left: this.getCircleFillLeft(moonPhase)}]}>
                     </View>
                     <View style={[weatherStyles.circleTextContainer]}>
                         <Text style={[styles.circleText, {
