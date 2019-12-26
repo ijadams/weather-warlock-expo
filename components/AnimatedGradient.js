@@ -44,7 +44,9 @@ export const presetColors = {
     ],
     night: [
         'rgb(0, 0, 0)',
+        'rgb(12.5, 12.5, 12.5)',
         'rgb(25, 25, 25)',
+        'rgb(32.5, 32.5, 32.5)',
         'rgb(50, 50, 50)',
     ]
 };
@@ -53,8 +55,8 @@ export class AnimatedGradient extends Component {
 
     static defaultProps = {
         points: {
-            start: {x: 0, y: 0.4},
-            end: {x: 1, y: 0.6}
+            start: {x: 0, y: 0},
+            end: {x: 1, y: 1}
         }
     }
 
