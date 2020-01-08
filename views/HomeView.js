@@ -2,14 +2,18 @@ import React from "react";
 import {
     Image,
     Text,
-    View
+    View,
+    Button,
+    Hr,
+    TouchableOpacity
 } from "react-native";
 import * as Font from "expo-font";
-import {MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons, Ionicons} from "@expo/vector-icons";
 import moment from 'moment';
 import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
 import {Weather, AnimatedGradient, HomePlayer} from '../components';
+import SlidingUpPanel from 'rn-sliding-up-panel';
 
 const LOADING_STRING = "... loading ...";
 
@@ -147,7 +151,19 @@ export class HomeView extends React.Component {
                     </View>
                 </View>
                 <Weather weather={this.state.weather}></Weather>
-                <HomePlayer weather={this.state.weather}></HomePlayer>
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity onPress={() => this._panel.show()} style={styles.bottomPanelContainer}>
+                        <HomePlayer weather={this.state.weather}></HomePlayer>
+                    </TouchableOpacity>
+                    <SlidingUpPanel ref={c => this._panel = c}>
+                        <View style={[styles.container, {backgroundColor: '#fff'}]}>
+                            <Text>Here is the content inside panel</Text>
+                            <TouchableOpacity onPress={() => this._panel.hide()}>
+                                <Ionicons name="md-checkmark-circle" size={32} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                    </SlidingUpPanel>
+                </View>
             </AnimatedGradient>
         );
     }
