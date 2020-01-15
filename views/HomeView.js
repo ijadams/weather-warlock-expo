@@ -155,12 +155,19 @@ export class HomeView extends React.Component {
                     <TouchableOpacity onPress={() => this._panel.show()} style={styles.bottomPanelContainer}>
                         <HomePlayer weather={this.state.weather}></HomePlayer>
                     </TouchableOpacity>
-                    <SlidingUpPanel ref={c => this._panel = c}>
+                    <SlidingUpPanel ref={c => this._panel = c} allowDragging={false} showBackdrop={false}>
                         <View style={[styles.container, {backgroundColor: '#fff'}]}>
-                            <Text>Here is the content inside panel</Text>
-                            <TouchableOpacity onPress={() => this._panel.hide()}>
-                                <Ionicons name="md-checkmark-circle" size={32} color="black" />
-                            </TouchableOpacity>
+                            <View style={styles.container}>
+                                <Text style={[{fontFamily: "grenze-regular", fontSize: 24}]}>Pre Recorded Tracks</Text>
+                            </View>
+                            <View style={styles.container}>
+                                <Text style={[{fontFamily: "grenze-regular", fontSize: 24}]}>Instruments</Text>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => this._panel.hide()}>
+                                    <Ionicons name="ios-arrow-down" color="#000" size={32} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </SlidingUpPanel>
                 </View>

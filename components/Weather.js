@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone';
-
+import {EventEmitter} from "fbemitter";
 import {styles} from '../constants/styles.const';
 import {
     View,
@@ -34,41 +34,48 @@ export class Weather extends React.Component {
             return '0%';
         }
         if (moonPhase <= 0.5) {
-            return parseFloat(moonPhase * 200).toFixed(0)+"%";
+            return parseFloat(moonPhase * 200).toFixed(0) + "%";
         }
         return '100%';
     }
 
     getCircleFillLeft(moonPhase) {
-        if (moonPhase > 0.5 && moonPhase < 1) {
-            return parseFloat(moonPhase * 100).toFixed(0)+"%";
-        } else {
+        if (this.props.weather.isDay) {
             return '0%';
         }
+        if (moonPhase > 0.5 && moonPhase < 1) {
+            return parseFloat(moonPhase * 100).toFixed(0) + "%";
+        }
+        return '0%';
     }
 
     render() {
         const textColor = this.props.weather.isDay ? '#000' : '#fff';
+        const borderColor = this.props.weather.isDay ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)';
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
         const circleFillColor = this.props.weather.isDay ? '#f39c12' : 'rgb(254, 250, 212)';
-        const circleTextColor = this.props.weather.isDay ? '#000' :  '#808e9b';
+        const circleTextColor = this.props.weather.isDay ? '#000' : '#808e9b';
         const moonPhase = this.props.weather.moonPhase;
 
         return (
             <View style={weatherStyles.weatherContainer}>
-                <View style={[weatherStyles.circle, {borderColor: circleFillColor}]}>
-                    <View style={[weatherStyles.circleFill, {backgroundColor: circleFillColor, width: this.getCircleFillWidth(moonPhase), left: this.getCircleFillLeft(moonPhase)}]}>
+                <View style={[weatherStyles.circle, {borderColor: circleTextColor}]}>
+                    <View style={[weatherStyles.circleFill, {
+                        backgroundColor: circleFillColor,
+                        width: this.getCircleFillWidth(moonPhase),
+                        left: this.getCircleFillLeft(moonPhase),
+                    }]}>
                     </View>
                     <View style={[weatherStyles.circleTextContainer]}>
                         <Text style={[styles.circleText, {
-                                textAlign: 'center',
-                                fontFamily: "grenze-regular",
-                                fontSize: 100,
-                                letterSpacing: -3,
-                                paddingLeft: 20,
-                                color: circleTextColor
-                                }]}>
-                                {this.props.weather.temperature}°
+                            textAlign: 'center',
+                            fontFamily: "grenze-regular",
+                            fontSize: 100,
+                            letterSpacing: -3,
+                            paddingLeft: 20,
+                            color: circleTextColor
+                        }]}>
+                            {this.props.weather.temperature}°
                         </Text>
                     </View>
                 </View>
@@ -90,7 +97,8 @@ export class Weather extends React.Component {
                         {'\n'}{this.state.time}
                     </Text>
                 </Text>
-                <View style={weatherStyles.container}>
+                <View style={[weatherStyles.container, {borderColor: borderColor}]}>
+
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
                             Conditions
@@ -172,7 +180,6 @@ const weatherStyles = StyleSheet.create({
         maxWidth: '100%',
         justifyContent: 'center',
         height: 50,
-        borderColor: 'rgba(255,255,255,.20)',
         borderStyle: 'solid',
         borderTopWidth: 1,
         borderBottomWidth: 1,
@@ -197,32 +204,41 @@ const weatherStyles = StyleSheet.create({
         width: 196,
         height: 196,
         borderRadius: 196 / 2,
-        borderWidth: 2,
+        borderWidth: 3,
         overflow: 'hidden',
         display: 'flex',
         alignContent: 'center',
         justifyContent: 'center',
-        marginBottom: 15
-      },
-      circleFill: {
+        marginBottom: 15,
+    },
+    circleFill: {
         bottom: 0,
         position: 'absolute',
         zIndex: 0,
-        height: '100%'
-      },
-      circleText: {
-          backgroundColor: 'transparent'
-      },
-      circleTextContainer: {
-          position: 'absolute',
-          zIndex: 0,
-          bottom: 10,
-          backgroundColor: 'rgba(0,0,0,0)',
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          alignContent: 'center',
-          justifyContent: 'center',
-          textAlign: 'center'
-      }
+        height: '100%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+
+        elevation: 24,
+    },
+    circleText: {
+        backgroundColor: 'transparent'
+    },
+    circleTextContainer: {
+        position: 'absolute',
+        zIndex: 0,
+        bottom: 10,
+        backgroundColor: 'rgba(0,0,0,0)',
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+    }
 });

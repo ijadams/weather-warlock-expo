@@ -266,7 +266,7 @@ export class HomePlayer extends React.Component {
                         borderRadius: 2,
                         height: 0,
                         width: '33%',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
                     }}
                 />
             </View>

@@ -68,7 +68,6 @@ export class AnimatedGradient extends Component {
     }
 
     _getSpeed(speed) {
-        console.log('speed', speed);
         return 3000;
         if (speed < 5) {
             return 3500;
