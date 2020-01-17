@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, Text, View, ScrollView, Dimensions, DeviceEventEmitter} from 'react-native';
 
-import {HomeView} from './views/HomeView';
+import {HomeView, AboutView} from './views';
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
@@ -35,17 +35,10 @@ export default class App extends React.Component {
                         <HomeView></HomeView>
                     </View>
 
-                    <View style={styles.secondView}>
-                        <Text style={styles.headerText}>Second View</Text>
+                    <View style={styles.aboutView}>
+                        <AboutView></AboutView>
                     </View>
 
-                    <View style={styles.thirdView}>
-                        <Text style={styles.headerText}>Third View</Text>
-                    </View>
-
-                    <View style={styles.forthView}>
-                        <Text style={styles.headerText}>Forth View</Text>
-                    </View>
                 </ScrollView>
             </View>
         )
@@ -66,26 +59,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
-    secondView: {
+    aboutView: {
         width: DEVICE_WIDTH,
-        backgroundColor: '#9C27B0',
+        backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row'
-    },
-    thirdView: {
-        width: DEVICE_WIDTH,
-        backgroundColor: '#3F51B5',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-    forthView: {
-        width: DEVICE_WIDTH,
-        backgroundColor: '#009688',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-
+    }
 });

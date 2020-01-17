@@ -32,6 +32,10 @@ export class Icon {
     }
 }
 
+export const ICON_WARLOCK_BOARD = new Icon(
+    require("../assets/images/warlock-board.jpg")
+);
+
 export const ICON_PLAY_BUTTON = new Icon(
     require("../assets/images/play_germanic_b.png"),
     34,
