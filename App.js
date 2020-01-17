@@ -1,18 +1,37 @@
 import React from "react";
 
-import {StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, DeviceEventEmitter} from 'react-native';
 
 import {HomeView} from './views/HomeView';
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
 export default class App extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            pageScroll: true
+        }
+    }
+
+
+    componentDidMount() {
+        DeviceEventEmitter.addListener("event.weatherScroll", (e) => {
+            this.setState({pageScroll: false});
+            setTimeout(() => {
+                this.setState({pageScroll: true});
+            }, 350)
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false} bounces={false}>
+                <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll} pagingEnabled={true} showsHorizontalScrollIndicator={false}
+                            bounces={false}>
 
-                <View style={styles.homeView}>
+                    <View style={styles.homeView}>
                         <HomeView></HomeView>
                     </View>
 

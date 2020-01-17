@@ -1,10 +1,9 @@
 import React from 'react';
 import moment from 'moment-timezone';
-import {EventEmitter} from "fbemitter";
 import {styles} from '../constants/styles.const';
 import {
     View,
-    Dimensions,
+    DeviceEventEmitter,
     ScrollView,
     Text,
     StyleSheet
@@ -16,6 +15,7 @@ export class Weather extends React.Component {
         this.state = {
             time: moment.tz("America/Chicago").format('HH:mm'),
         };
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
@@ -47,6 +47,10 @@ export class Weather extends React.Component {
             return parseFloat(moonPhase * 100).toFixed(0) + "%";
         }
         return '0%';
+    }
+
+    handleScroll() {
+        DeviceEventEmitter.emit('event.weatherScroll', {});
     }
 
     render() {
@@ -99,7 +103,7 @@ export class Weather extends React.Component {
                 </Text>
                 <View style={[weatherStyles.container, {borderColor: borderColor}]}>
 
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}  onScroll={e => this.handleScroll(e)} scrollEventThrottle={16}>
                         <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
                             Conditions
                             <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>
@@ -232,7 +236,8 @@ const weatherStyles = StyleSheet.create({
     circleTextContainer: {
         position: 'absolute',
         zIndex: 0,
-        bottom: 10,
+        bottom: 7,
+        marginLeft: -5,
         backgroundColor: 'rgba(0,0,0,0)',
         height: '100%',
         width: '100%',
