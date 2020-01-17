@@ -207,6 +207,8 @@ export class HomePlayer extends React.Component {
     render() {
         const iconPauseButton = this.props.weather.isDay ? fromPlaylist.ICON_PAUSE_BUTTON.module : fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module;
         const iconPlayButton = this.props.weather.isDay ? fromPlaylist.ICON_PLAY_BUTTON.module : fromPlaylist.ICON_PLAY_BUTTON_WHITE.module;
+        const textColor = this.props.weather.isDay ? '#000' : '#fff';
+
         return (
             <View style={styles.playerContainer}>
                 <View style={styles.videoContainer}>
@@ -254,6 +256,19 @@ export class HomePlayer extends React.Component {
                         />
                     </TouchableHighlight>
                 </View>
+                <View
+                    style={{
+                        position: 'absolute',
+                        bottom: 10,
+                        borderBottomColor: textColor,
+                        borderBottomWidth: 2,
+                        borderTopWidth: 2,
+                        borderRadius: 2,
+                        height: 0,
+                        width: '33%',
+                        overflow: 'hidden',
+                    }}
+                />
             </View>
         )
     }
@@ -264,8 +279,7 @@ const playerStyles = StyleSheet.create({
     buttonsContainerBase: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 25
+        alignItems: 'center'
     },
     wrapper: {},
     button: {

@@ -29,14 +29,29 @@ export const styles = StyleSheet.create({
         alignSelf: "stretch",
         backgroundColor: BACKGROUND_COLOR
     },
+    bottomContainer: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        alignSelf: "stretch",
+        backgroundColor: BACKGROUND_COLOR
+    },
+    bottomPanelContainer: {
+        flex: 1,
+        width: '100%',
+        margin: 0,
+    },
     wrapper: {},
     playerContainer: {
-        marginTop: -20
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
     },
     logoContainer: {
         textAlign: "center",
-        marginTop: 10,
-        height: 150,
+        height: 200,
         width: 'auto',
         justifyContent: "center",
         alignItems: "center",
@@ -49,14 +64,8 @@ export const styles = StyleSheet.create({
     space: {
         height: FONT_SIZE
     },
-    videoContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    video: {
-        maxWidth: DEVICE_WIDTH
-    },
+    videoContainer: {},
+    video: {},
     playbackContainer: {
         flex: 1,
         flexDirection: "column",
