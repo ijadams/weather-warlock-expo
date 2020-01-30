@@ -61,8 +61,13 @@ export const styles = StyleSheet.create({
         alignSelf: "center"
     },
     nameContainer: {
+        marginLeft: -8,
         height: 'auto',
-        paddingBottom: 30
+        width: 'auto',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     space: {
         height: FONT_SIZE

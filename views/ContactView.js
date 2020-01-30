@@ -1,16 +1,17 @@
 import React from "react";
 import {
+    Image,
     Text,
     View,
-    StyleSheet,
+    StyleSheet, ScrollView
 } from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
-import {DEVICE_HEIGHT, styles} from "../constants";
+import {styles} from "../constants";
+import * as fromPlaylist from "../constants/player.const";
 import * as Font from "expo-font";
-import {InstrumentPlayer} from "../components";
 
 
-export class InstrumentsView extends React.Component {
+export class ContactView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,10 +37,18 @@ export class InstrumentsView extends React.Component {
         return !this.state.fontLoaded ? (
             <View style={styles.emptyContainer}/>
         ) : (
-            <View style={instrumentStyles.container}>
-                <Text style={instrumentStyles.header}>Instrument Board</Text>
-                <InstrumentPlayer title={'Radar Moon'} path={'https://weather-warlock.s3.amazonaws.com/radar-moon.wav'}/>
-                <InstrumentPlayer last={true} title={'Record Noise'} path={'https://weather-warlock.s3.amazonaws.com/needle.wav'}/>
+            <View style={[aboutStyles.container, {}]}>
+                <Text style={[aboutStyles.header, {}]}>
+                    Contact US
+                </Text>
+                <Image style={aboutStyles.logo}
+                       source={fromPlaylist.ICON_WARLOCK_BOARD.module}/>
+                <View>
+                    <Text>
+                      Coming Soon.
+                    </Text>
+               </View>
+
             </View>
         )
     }
@@ -47,27 +56,23 @@ export class InstrumentsView extends React.Component {
 
 
 
-const instrumentStyles = StyleSheet.create({
+const aboutStyles = StyleSheet.create({
     container: {
-        paddingTop: 40,
-        flex: 1,
-        flexDirection: 'column',
+        flexWrap: 'wrap',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'stretch',
-        height: DEVICE_HEIGHT - 40,
-        width: '100%',
-    },
-    header: {
-        fontFamily: "grenze-regular",
-        fontSize: 24,
-        textAlign: 'center',
-        position: 'absolute',
-        width: '100%',
-        top: 20
+        padding: 30,
     },
     emptyContainer: {
         alignSelf: "stretch",
         backgroundColor: 'white'
+    },
+    header: {
+        textAlign: 'center',
+        fontSize: 41,
+        color: '#000',
+        textTransform: 'uppercase',
+        fontFamily: "grenze-regular"
     },
     logo: {
         backgroundColor: "transparent",

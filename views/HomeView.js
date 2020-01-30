@@ -5,7 +5,7 @@ import {
     View,
     Button,
     Hr,
-    TouchableOpacity
+    TouchableOpacity, DeviceEventEmitter
 } from "react-native";
 import * as Font from "expo-font";
 import {MaterialIcons, Ionicons} from "@expo/vector-icons";
@@ -124,6 +124,19 @@ export class HomeView extends React.Component {
         return directions[Math.round(((windBearing %= 360) < 0 ? windBearing + 360 : windBearing) / 45) % 8];
     }
 
+    _handleBottomDrawer(show) {
+        if (show) {
+            this._panel.show();
+        } else {
+            this._panel.hide()
+        }
+        DeviceEventEmitter.emit('event.drawer', {});
+    }
+
+    _handleTopDrawer(show) {
+        console.log('clicked', show)
+    }
+
     render() {
         const textColor = this.state.weather.isDay ? '#000' : '#fff';
         return !this.state.fontLoaded || !this.state.weather.weatherLoaded ? (
@@ -142,26 +155,32 @@ export class HomeView extends React.Component {
                     }]}>
                         Weather for the Blind
                     </Text>
-                    <View style={styles.nameContainer}>
-                        <Text style={[styles.text, {
-                            textTransform: 'lowercase',
-                            fontFamily: "grenze-regular",
-                            color: textColor,
-                            fontSize: 16,
-                        }]}>... {this.state.playbackInstanceName} ... </Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this._handleTopDrawer(false)}>
+                        <View style={styles.nameContainer}>
+                            <Ionicons name="ios-information-circle-outline" color={textColor} size={16}/>
+                            <Text style={[styles.text, {
+                                textTransform: 'lowercase',
+                                fontFamily: "grenze-regular",
+                                color: textColor,
+                                fontSize: 16,
+                                marginTop: -4,
+                                marginLeft: 4
+                            }]}>{this.state.playbackInstanceName}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <Weather weather={this.state.weather}></Weather>
                 <View style={styles.bottomContainer}>
-                    <TouchableOpacity onPress={() => this._panel.show()} style={styles.bottomPanelContainer}>
+                    <TouchableOpacity onPress={() => this._handleBottomDrawer(true)}
+                                      style={styles.bottomPanelContainer}>
                         <HomePlayer weather={this.state.weather}></HomePlayer>
                     </TouchableOpacity>
                     <SlidingUpPanel ref={c => this._panel = c} allowDragging={false} showBackdrop={false}>
                         <View style={[styles.container, {backgroundColor: '#fff'}]}>
                             <InstrumentsView/>
                             <View style={styles.downArrowContainer}>
-                                <TouchableOpacity onPress={() => this._panel.hide()}>
-                                    <Ionicons name="ios-arrow-down" color="#000" size={32} />
+                                <TouchableOpacity onPress={() => this._handleBottomDrawer(false)}>
+                                    <Ionicons name="ios-arrow-down" color="#000" size={32}/>
                                 </TouchableOpacity>
                             </View>
                         </View>

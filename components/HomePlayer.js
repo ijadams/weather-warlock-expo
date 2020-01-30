@@ -4,10 +4,12 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    View
+    View,
+    Text
 } from "react-native";
 import {Audio, Video} from "expo-av";
 import {styles} from '../constants';
+import {Ionicons} from "@expo/vector-icons";
 import * as fromPlaylist from '../constants/player.const';
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
@@ -189,8 +191,8 @@ export class HomePlayer extends React.Component {
     render() {
         const iconPauseButton = this.props.weather.isDay ? fromPlaylist.ICON_PAUSE_BUTTON.module : fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module;
         const iconPlayButton = this.props.weather.isDay ? fromPlaylist.ICON_PLAY_BUTTON.module : fromPlaylist.ICON_PLAY_BUTTON_WHITE.module;
-        const textColor = this.props.weather.isDay ? '#000' : '#fff';
-
+        const buttonBgColor = this.props.weather.isDay ? '#000' : '#fff';
+        const buttonTextColor = this.props.weather.isDay ? '#fff' : '#000';
         return (
             <View style={styles.playerContainer}>
                 <View style={styles.videoContainer}>
@@ -238,19 +240,10 @@ export class HomePlayer extends React.Component {
                         />
                     </TouchableHighlight>
                 </View>
-                <View
-                    style={{
-                        position: 'absolute',
-                        bottom: 10,
-                        borderBottomColor: textColor,
-                        borderBottomWidth: 2,
-                        borderTopWidth: 2,
-                        borderRadius: 2,
-                        height: 0,
-                        width: '33%',
-                        overflow: 'hidden',
-                    }}
-                />
+                <View style={[playerStyles.openButton, {backgroundColor: buttonBgColor}]}>
+                    <Ionicons name="ios-settings" color={buttonTextColor} size={10} />
+                    <Text style={[playerStyles.openButtonText, {color: buttonTextColor}]}>Instruments</Text>
+                </View>
             </View>
         )
     }
@@ -260,6 +253,25 @@ export class HomePlayer extends React.Component {
 const playerStyles = StyleSheet.create({
     buttonsContainerBase: {
         display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    openButtonText: {
+        textAlign: 'center',
+        fontSize: 10,
+        margin: 0,
+        padding: 0,
+        marginTop: -2,
+        paddingLeft: 4
+    },
+    openButton: {
+        marginTop: 20,
+        paddingTop: 3,
+        paddingBottom: 3,
+        borderRadius: 5,
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },

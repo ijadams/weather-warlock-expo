@@ -179,7 +179,9 @@ export class InstrumentPlayer extends React.Component {
             }
         }
     };
-
+    _onError() {
+        alert('There was an issue loading on of the instruments');
+    }
     _getTimestamp() {
         return this.playbackInstance !== null;
     }
@@ -235,14 +237,11 @@ export class InstrumentPlayer extends React.Component {
                                 opacity: this.state.showVideo ? 1.0 : 0.0,
                             }
                         ]}
+                        isLooping={true}
                         resizeMode={Video.RESIZE_MODE_CONTAIN}
                         onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
-                        onLoadStart={this._onLoadStart}
-                        onLoad={this._onLoad}
                         onError={this._onError}
-                        onFullscreenUpdate={this._onFullscreenUpdate}
                         onReadyForDisplay={this._onReadyForDisplay}
-                        useNativeControls={this.state.useNativeControls}
                     />
                 </View>
                 <View style={playerStyles.volumeContainer}>
