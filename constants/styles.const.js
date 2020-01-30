@@ -37,6 +37,9 @@ export const styles = StyleSheet.create({
         alignSelf: "stretch",
         backgroundColor: BACKGROUND_COLOR
     },
+    downArrowContainer: {
+      height: 40,
+    },
     bottomPanelContainer: {
         flex: 1,
         width: '100%',

@@ -14,6 +14,7 @@ import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
 import {Weather, AnimatedGradient, HomePlayer} from '../components';
 import SlidingUpPanel from 'rn-sliding-up-panel';
+import {InstrumentsView} from "./InstrumentsView";
 
 const LOADING_STRING = "... loading ...";
 
@@ -157,13 +158,8 @@ export class HomeView extends React.Component {
                     </TouchableOpacity>
                     <SlidingUpPanel ref={c => this._panel = c} allowDragging={false} showBackdrop={false}>
                         <View style={[styles.container, {backgroundColor: '#fff'}]}>
-                            <View style={styles.container}>
-                                <Text style={[{fontFamily: "grenze-regular", fontSize: 24}]}>Pre Recorded Tracks</Text>
-                            </View>
-                            <View style={styles.container}>
-                                <Text style={[{fontFamily: "grenze-regular", fontSize: 24}]}>Instruments</Text>
-                            </View>
-                            <View>
+                            <InstrumentsView/>
+                            <View style={styles.downArrowContainer}>
                                 <TouchableOpacity onPress={() => this._panel.hide()}>
                                     <Ionicons name="ios-arrow-down" color="#000" size={32} />
                                 </TouchableOpacity>

@@ -4,7 +4,9 @@ import {
     Image,
     StyleSheet,
     TouchableHighlight,
-    View
+    View,
+    Slider,
+    Text
 } from "react-native";
 import {Audio, Video} from "expo-av";
 import {styles} from '../constants';
@@ -16,7 +18,7 @@ const LOADING_STRING = "... loading ...";
 const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
 
 
-export class HomePlayer extends React.Component {
+export class InstrumentPlayer extends React.Component {
     constructor(props) {
         super(props);
         this.index = 0;
@@ -43,6 +45,7 @@ export class HomePlayer extends React.Component {
             throughEarpiece: false
         };
     }
+
     componentDidMount() {
         Audio.setAudioModeAsync({
             allowsRecordingIOS: false,
@@ -61,7 +64,7 @@ export class HomePlayer extends React.Component {
             this.playbackInstance = null;
         }
 
-        const source = {uri: fromPlaylist.PLAYLIST[this.index].uri};
+        const source = {uri: this.props.path};
         const initialStatus = {
             shouldPlay: playing,
             rate: this.state.rate,
@@ -156,11 +159,6 @@ export class HomePlayer extends React.Component {
         }
     };
 
-    _advanceIndex(forward) {
-        this.index =
-            (this.index + (forward ? 1 : fromPlaylist.PLAYLIST.length - 1)) % fromPlaylist.PLAYLIST.length;
-    }
-
     async _updatePlaybackInstanceForIndex(playing) {
         this._updateScreenForLoading(true);
 
@@ -186,31 +184,21 @@ export class HomePlayer extends React.Component {
         return this.playbackInstance !== null;
     }
 
-    render() {
-        const iconPauseButton = this.props.weather.isDay ? fromPlaylist.ICON_PAUSE_BUTTON.module : fromPlaylist.ICON_PAUSE_BUTTON_WHITE.module;
-        const iconPlayButton = this.props.weather.isDay ? fromPlaylist.ICON_PLAY_BUTTON.module : fromPlaylist.ICON_PLAY_BUTTON_WHITE.module;
-        const textColor = this.props.weather.isDay ? '#000' : '#fff';
+    _onVolumeSliderValueChange = value => {
+        if (this.playbackInstance != null) {
+            this.playbackInstance.setVolumeAsync(value);
+        }
+    };
 
+    render() {
+        const iconPauseButton = fromPlaylist.ICON_PAUSE_BUTTON.module;
+        const iconPlayButton = fromPlaylist.ICON_PLAY_BUTTON.module;
+        const bgColor = this.state.isPlaying ? 'rgba(243,193,18, 0.1)' : 'rgba(25,25,25,0.1)';
+        const bottomBorder = this.props.last ? 2 : 0;
         return (
-            <View style={styles.playerContainer}>
-                <View style={styles.videoContainer}>
-                    <Video
-                        ref={this._mountVideo}
-                        style={[
-                            styles.video,
-                            {
-                                opacity: this.state.showVideo ? 1.0 : 0.0,
-                            }
-                        ]}
-                        resizeMode={Video.RESIZE_MODE_CONTAIN}
-                        onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
-                        onLoadStart={this._onLoadStart}
-                        onLoad={this._onLoad}
-                        onError={this._onError}
-                        onFullscreenUpdate={this._onFullscreenUpdate}
-                        onReadyForDisplay={this._onReadyForDisplay}
-                        useNativeControls={this.state.useNativeControls}
-                    />
+            <View style={[playerStyles.playerContainer, {backgroundColor: bgColor, borderBottomWidth: bottomBorder}]}>
+                <View style={playerStyles.third}>
+                    <Text style={playerStyles.trackTitle}>{this.props.title}</Text>
                 </View>
                 <View
                     style={[
@@ -238,19 +226,33 @@ export class HomePlayer extends React.Component {
                         />
                     </TouchableHighlight>
                 </View>
-                <View
-                    style={{
-                        position: 'absolute',
-                        bottom: 10,
-                        borderBottomColor: textColor,
-                        borderBottomWidth: 2,
-                        borderTopWidth: 2,
-                        borderRadius: 2,
-                        height: 0,
-                        width: '33%',
-                        overflow: 'hidden',
-                    }}
-                />
+                <View style={styles.videoContainer}>
+                    <Video
+                        ref={this._mountVideo}
+                        style={[
+                            styles.video,
+                            {
+                                opacity: this.state.showVideo ? 1.0 : 0.0,
+                            }
+                        ]}
+                        resizeMode={Video.RESIZE_MODE_CONTAIN}
+                        onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
+                        onLoadStart={this._onLoadStart}
+                        onLoad={this._onLoad}
+                        onError={this._onError}
+                        onFullscreenUpdate={this._onFullscreenUpdate}
+                        onReadyForDisplay={this._onReadyForDisplay}
+                        useNativeControls={this.state.useNativeControls}
+                    />
+                </View>
+                <View style={playerStyles.volumeContainer}>
+                    <Slider
+                        style={playerStyles.volumeSlider}
+                        value={1}
+                        onValueChange={this._onVolumeSliderValueChange}
+                        thumbTintColor="#000"
+                        minimumTrackTintColor="#000"></Slider>
+                </View>
             </View>
         )
     }
@@ -261,12 +263,41 @@ const playerStyles = StyleSheet.create({
     buttonsContainerBase: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '12%'
+    },
+    third: {
+        width: '32%',
+    },
+    trackTitle: {
+        fontFamily: "roboto-regular"
+    },
+    playerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'space-between',
+        width: '100%',
+        borderStyle: 'solid',
+        borderTopWidth: 2,
+        borderColor: 'rgba(0,0,0,0.25)',
+        padding: 10
     },
     wrapper: {},
     button: {
-        width: 50,
-        height: 50
-    }
+        width: 25,
+        height: 25
+    },
+    volumeContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        minWidth: '56%',
+        maxWidth: '56%'
+    },
+    volumeSlider: {
+        width: '100%'
+    },
 });
 
