@@ -11,7 +11,8 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            pageScroll: true
+            pageScroll: true,
+            drawerOpen: false
         }
     }
 
@@ -25,17 +26,16 @@ export default class App extends React.Component {
             }, 350)
         });
         DeviceEventEmitter.addListener("event.drawer", (e) => {
-            this.setState({pageScroll: false});
             setTimeout(() => {
-                this.setState({pageScroll: true});
-            }, 350)
+                this.setState({drawerOpen: !this.state.drawerOpen});
+            }, 100)
         });
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll} pagingEnabled={true} showsHorizontalScrollIndicator={false}
+                <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll && !this.state.drawerOpen} pagingEnabled={true} showsHorizontalScrollIndicator={false}
                             bounces={false}>
 
                     <View style={styles.homeView}>
