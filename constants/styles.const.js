@@ -35,7 +35,8 @@ export const styles = StyleSheet.create({
         justifyContent: "flex-end",
         alignItems: "center",
         alignSelf: "stretch",
-        backgroundColor: BACKGROUND_COLOR
+        backgroundColor: BACKGROUND_COLOR,
+        paddingBottom: 50
     },
     downArrowContainer: {
       height: 40,

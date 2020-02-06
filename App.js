@@ -12,7 +12,8 @@ export default class App extends React.Component {
         super();
         this.state = {
             pageScroll: true,
-            drawerOpen: false
+            drawerOpen: false,
+            activeIndex: 0
         }
     }
 
@@ -32,10 +33,26 @@ export default class App extends React.Component {
         });
     }
 
+    _handleScroll(event) {
+        const scrollWidth = event.nativeEvent.contentOffset.x;
+        console.log(scrollWidth);
+        if (scrollWidth === 0) {
+            this.state.activeIndex = 0;
+        } else if (scrollWidth > DEVICE_WIDTH && scrollWidth < DEVICE_WIDTH * 2) {
+            this.state.activeIndex = 1;
+        } else {
+            this.state.activeIndex = 2;
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll && !this.state.drawerOpen} pagingEnabled={true} showsHorizontalScrollIndicator={false}
+
+                <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll && !this.state.drawerOpen}
+                            onScroll={this._handleScroll}
+                            pagingEnabled={true}
+                            showsHorizontalScrollIndicator={false}
                             bounces={false}>
 
                     <View style={styles.homeView}>
@@ -50,9 +67,25 @@ export default class App extends React.Component {
                         <ContactView></ContactView>
                     </View>
 
-
-
                 </ScrollView>
+
+                <View style={styles.pagerView}>
+                    <View style={styles.pagerItem}>
+                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 0 ? 'bold' : 'normal'}]}>
+                            Home
+                        </Text>
+                    </View>
+                    <View style={styles.pagerItem}>
+                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 1 ? 'bold' : 'normal'}]}>
+                            About
+                        </Text>
+                    </View>
+                    <View style={styles.pagerItem}>
+                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 2 ? 'bold' : 'normal'}]}>
+                            Contact
+                        </Text>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -63,7 +96,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: '#fff',
+        backgroundColor: 'black',
     },
     homeView: {
         width: DEVICE_WIDTH,
@@ -85,5 +118,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row'
+    },
+    pagerView: {
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: 'black',
+    },
+    pagerItem: {
+        width: '32%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    pagerText: {
+        color: 'white'
     }
 });
