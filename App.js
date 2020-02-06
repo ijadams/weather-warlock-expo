@@ -50,6 +50,8 @@ export default class App extends React.Component {
                         <ContactView></ContactView>
                     </View>
 
+
+
                 </ScrollView>
             </View>
         )

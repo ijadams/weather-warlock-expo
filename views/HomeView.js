@@ -14,7 +14,7 @@ import {MaterialIcons, Ionicons} from "@expo/vector-icons";
 import moment from 'moment';
 import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
-import {Weather, AnimatedGradient, HomePlayer} from '../components';
+import {Weather, AnimatedGradient, InstrumentBar} from '../components';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import {InstrumentsView} from "./InstrumentsView";
 
@@ -161,7 +161,7 @@ export class HomeView extends React.Component {
                 <View style={styles.bottomContainer}>
                     <TouchableOpacity onPress={() => this._handleBottomDrawer(true)}
                                       style={styles.bottomPanelContainer}>
-                        <HomePlayer weather={this.state.weather}></HomePlayer>
+                        <InstrumentBar weather={this.state.weather}></InstrumentBar>
                     </TouchableOpacity>
                     <SlidingUpPanel ref={c => this._panel = c} allowDragging={false} showBackdrop={false}>
                         <View style={[styles.container, {backgroundColor: '#fff'}]}>
