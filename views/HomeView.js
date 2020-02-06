@@ -5,6 +5,8 @@ import {
     View,
     Button,
     Hr,
+    Alert,
+    TouchableHighlight,
     TouchableOpacity, DeviceEventEmitter
 } from "react-native";
 import * as Font from "expo-font";
@@ -133,8 +135,8 @@ export class HomeView extends React.Component {
         DeviceEventEmitter.emit('event.drawer', {});
     }
 
-    _handleTopDrawer(show) {
-        console.log('clicked', show)
+    _handleTopDrawer() {
+        alert('open drawer');
     }
 
     render() {
@@ -159,13 +161,13 @@ export class HomeView extends React.Component {
                         <View style={styles.nameContainer}>
                             <Ionicons name="ios-information-circle-outline" color={textColor} size={16}/>
                             <Text style={[styles.text, {
-                                textTransform: 'lowercase',
-                                fontFamily: "grenze-regular",
-                                color: textColor,
-                                fontSize: 16,
-                                marginTop: -4,
-                                marginLeft: 4
-                            }]}>{this.state.playbackInstanceName}</Text>
+                                    textTransform: 'lowercase',
+                                    fontFamily: "grenze-regular",
+                                    color: textColor,
+                                    fontSize: 16,
+                                    marginTop: -4,
+                                    marginLeft: 4
+                                }]}>{this.state.playbackInstanceName}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

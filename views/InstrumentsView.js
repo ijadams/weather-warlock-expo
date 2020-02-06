@@ -5,6 +5,7 @@ import {
     StyleSheet,
     ScrollView
 } from "react-native";
+import {Asset} from "expo-asset";
 import {MaterialIcons} from "@expo/vector-icons";
 import {DEVICE_HEIGHT, styles} from "../constants";
 import * as Font from "expo-font";
@@ -34,6 +35,19 @@ export class InstrumentsView extends React.Component {
 
 
     render() {
+        let tracks = [
+            {title: 'Bubble', path: Asset.fromModule(require('../assets/audio/bubble.mp3')).uri},
+            {title: 'Fire', path: Asset.fromModule(require('../assets/audio/fire.mp3')).uri},
+            {title: 'German', path: Asset.fromModule(require('../assets/audio/german.mp3')).uri},
+            {title: 'Heartbeat', path: Asset.fromModule(require('../assets/audio/heartbeat.mp3')).uri},
+            {title: 'Jungle', path: Asset.fromModule(require('../assets/audio/jungle.mp3')).uri},
+            {title: 'Morse', path: Asset.fromModule(require('../assets/audio/morse.mp3')).uri},
+            {title: 'White Noise', path: Asset.fromModule(require('../assets/audio/white.mp3')).uri},
+            {title: 'Tabla', path: Asset.fromModule(require('../assets/audio/tabla.mp3')).uri},
+            {title: 'Radar Moon', path: Asset.fromModule(require('../assets/audio/radar-moon.mp3')).uri},
+            {title: 'Record Noise', path: Asset.fromModule(require('../assets/audio/needle.mp3')).uri},
+        ];
+        tracks = tracks.sort((a, b) => (a.title > b.title) ? 1 : -1);
         return !this.state.fontLoaded ? (
             <View style={styles.emptyContainer}/>
         ) : (
@@ -42,14 +56,17 @@ export class InstrumentsView extends React.Component {
                     <Text style={instrumentStyles.header}>Instrument Board</Text>
                 </View>
                 <ScrollView style={instrumentStyles.scrollContainer} alwaysBounceVertical={false} horizontal={false}>
-                    <InstrumentPlayer title={'Radar Moon'} path={'https://weather-warlock.s3.amazonaws.com/radar-moon.wav'}/>
-                    <InstrumentPlayer last={true} title={'Record Noise'} path={'https://weather-warlock.s3.amazonaws.com/needle.wav'}/>
+                    {tracks.map((track, i) => {
+                        return (
+                            <InstrumentPlayer key={i} title={track.title} path={track.path}
+                                              last={i + 1 === tracks.length}/>
+                        )
+                    })}
                 </ScrollView>
             </View>
         )
     }
 }
-
 
 
 const instrumentStyles = StyleSheet.create({
@@ -71,7 +88,6 @@ const instrumentStyles = StyleSheet.create({
         alignSelf: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: 'red'
     },
     header: {
         fontFamily: "grenze-regular",
