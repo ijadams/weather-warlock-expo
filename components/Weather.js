@@ -13,7 +13,7 @@ export class Weather extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: moment.tz("America/Chicago").format('HH:mm'),
+            time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
         };
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -21,7 +21,7 @@ export class Weather extends React.Component {
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                time: moment.tz("America/Chicago").format('HH:mm'),
+                time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
             });
         }, 1000);
     }
@@ -54,6 +54,7 @@ export class Weather extends React.Component {
     }
 
     render() {
+
         const textColor = this.props.weather.isDay ? '#000' : '#fff';
         const borderColor = this.props.weather.isDay ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)';
         const subTextColor = this.props.weather.isDay ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)';
@@ -103,7 +104,8 @@ export class Weather extends React.Component {
                 </Text>
                 <View style={[weatherStyles.container, {borderColor: borderColor}]}>
 
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}  onScroll={e => this.handleScroll(e)} scrollEventThrottle={16}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} onScroll={e => this.handleScroll(e)}
+                                scrollEventThrottle={16}>
                         <Text style={[weatherStyles.text, {fontFamily: "roboto-light", color: textColor}]}>
                             Conditions
                             <Text style={[weatherStyles.subText, {fontFamily: "roboto-regular", color: subTextColor}]}>

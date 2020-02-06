@@ -86,35 +86,21 @@ export class HomeView extends React.Component {
                         pressure: json.currently.pressure,
                         uvIndex: json.currently.uvIndex,
                         moonPhase: json.daily.data[0].moonPhase,
+                        timeZone: json.timeZone,
                         weatherLoaded: true,
-                        timeOfDay: this._getTimeOfDay(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2)),
-                        isDay: this._isDayMode(moment.unix(json.currently.time).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2), moment.unix(json.daily.data[0].sunriseTime).format('HH:mm').substring(0, 2))
+                        timeOfDay: this._getTimeOfDay(json.currently.time, json.daily.data[0].sunriseTime, json.daily.data[0].sunsetTime),
+                        isDay: this._isDayMode(json.currently.time, json.daily.data[0].sunriseTime, json.daily.data[0].sunsetTime)
                     }
                 });
             });
     }
 
     _isDayMode(currentTime, sunUp, sunDown) {
-        currentTime = Number(currentTime);
-        sunUp = Number(sunUp);
-        sunDown = Number(sunDown) + 12;
         return currentTime >= sunUp && currentTime <= sunDown;
     }
 
     _getTimeOfDay(currentTime, sunUp, sunDown) {
-        currentTime = Number(currentTime);
-        sunUp = Number(sunUp);
-        sunDown = Number(sunDown) + 12;
-        const isDayTime = currentTime >= sunUp && currentTime <= sunDown;
-        const isDawn = Math.abs(sunUp - currentTime) <= 1;
-        const isDusk = Math.abs(sunDown - currentTime) <= 1;
-        if (isDawn) {
-            return 'dawn';
-        }
-        if (isDusk) {
-            return 'dusk';
-        }
-        if (isDayTime) {
+        if (currentTime >= sunUp && currentTime <= sunDown) {
             return 'day';
         }
         return 'night';
