@@ -1,6 +1,6 @@
 import React from "react";
 
-import {StyleSheet, Text, View, ScrollView, Dimensions, DeviceEventEmitter} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, DeviceEventEmitter, TouchableOpacity} from 'react-native';
 
 import {HomeView, AboutView, ContactView} from './views';
 
@@ -14,7 +14,8 @@ export default class App extends React.Component {
             pageScroll: true,
             drawerOpen: false,
             activeIndex: 0
-        }
+        };
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
 
@@ -33,15 +34,29 @@ export default class App extends React.Component {
         });
     }
 
-    _handleScroll(event) {
+    _handlePaginatorClick(index) {
+        if (index === 0) {
+            this.scroll.scrollTo({x: 0})
+        }
+        if (index === 1) {
+            this.scroll.scrollTo({x: DEVICE_WIDTH})
+        }
+        if (index === 2) {
+            this.scroll.scrollTo({x: DEVICE_WIDTH * 2})
+        }
+        this.setState({activeIndex: index});
+    }
+
+    handleScroll(event) {
         const scrollWidth = event.nativeEvent.contentOffset.x;
-        console.log(scrollWidth);
-        if (scrollWidth === 0) {
-            this.state.activeIndex = 0;
-        } else if (scrollWidth > DEVICE_WIDTH && scrollWidth < DEVICE_WIDTH * 2) {
-            this.state.activeIndex = 1;
-        } else {
-            this.state.activeIndex = 2;
+        if (scrollWidth < DEVICE_WIDTH) {
+            this.setState({activeIndex: 0})
+        }
+        if (scrollWidth >= DEVICE_WIDTH && scrollWidth < DEVICE_WIDTH * 2) {
+            this.setState({activeIndex: 1})
+        }
+        if (scrollWidth >= DEVICE_WIDTH * 2) {
+            this.setState({activeIndex: 2})
         }
     }
 
@@ -50,8 +65,10 @@ export default class App extends React.Component {
             <View style={styles.container}>
 
                 <ScrollView horizontal={true} scrollEnabled={this.state.pageScroll && !this.state.drawerOpen}
-                            onScroll={this._handleScroll}
+                            onScroll={this.handleScroll}
+                            scrollEventThrottle={1}
                             pagingEnabled={true}
+                            ref={(node) => this.scroll = node}
                             showsHorizontalScrollIndicator={false}
                             bounces={false}>
 
@@ -69,21 +86,36 @@ export default class App extends React.Component {
 
                 </ScrollView>
 
-                <View style={styles.pagerView}>
+                <View style={[styles.pagerView, {display: this.state.drawerOpen ? 'none' : 'flex'}]}>
                     <View style={styles.pagerItem}>
-                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 0 ? 'bold' : 'normal'}]}>
-                            Home
-                        </Text>
+                        <TouchableOpacity onPress={() => {
+                            this._handlePaginatorClick(0)
+                        }}>
+                            <Text
+                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 0 ? 'bold' : 'normal'}]}>
+                                Home
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.pagerItem}>
-                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 1 ? 'bold' : 'normal'}]}>
-                            About
-                        </Text>
+                        <TouchableOpacity onPress={() => {
+                            this._handlePaginatorClick(1)
+                        }}>
+                            <Text
+                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 1 ? 'bold' : 'normal'}]}>
+                                About
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.pagerItem}>
-                        <Text style={[styles.pagerText, {fontWeight: this.state.activeIndex === 2 ? 'bold' : 'normal'}]}>
-                            Contact
-                        </Text>
+                        <TouchableOpacity onPress={() => {
+                            this._handlePaginatorClick(2)
+                        }}>
+                            <Text
+                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 2 ? 'bold' : 'normal'}]}>
+                                Contact
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -135,6 +167,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     pagerText: {
-        color: 'white'
+        color: 'white',
+        textTransform: 'lowercase'
     }
 });
