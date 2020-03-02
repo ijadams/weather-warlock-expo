@@ -4,5 +4,5 @@
 
 http://weatherfortheblind.org/
 
-![Prototype Demo](assets/images/demo.gif)
+![Prototype Demo](assets/images/demo)
 

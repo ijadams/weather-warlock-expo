@@ -2,9 +2,13 @@ import React from "react";
 import {
     Image,
     Text,
+    Button,
     View,
-    StyleSheet, ScrollView
+    StyleSheet,
+    Linking,
+    TouchableOpacity
 } from "react-native";
+import {WebBrowser} from 'expo';
 import {MaterialIcons} from "@expo/vector-icons";
 import {styles} from "../constants";
 import * as fromPlaylist from "../constants/player.const";
@@ -32,36 +36,63 @@ export class ContactView extends React.Component {
         })();
     }
 
+    _donate = () => {
+        Linking.openURL('https://www.paypal.com/donate/?token=kDbBOFrQKyPNjFDQKBgTO8fieRdEF3yPnr747iv4lMI7l3h39NdIlG6JOxHrLs6eVbIClW&fromUL=true&country.x=US&locale.x=en_US');
+    }
+
+    _email = () => {
+        Linking.openURL('mailto:rhinestonerecords@hotmail.com');
+    }
 
     render() {
         return !this.state.fontLoaded ? (
             <View style={styles.emptyContainer}/>
         ) : (
-            <View style={[aboutStyles.container, {}]}>
-                <Text style={[aboutStyles.header, {}]}>
+            <View style={[contactStyles.container, {}]}>
+                <Text style={[contactStyles.header, {}]}>
                     Contact US
                 </Text>
-                <Image style={aboutStyles.logo}
+                <Image style={contactStyles.logo}
                        source={fromPlaylist.ICON_WARLOCK_BOARD.module}/>
-                <View>
-                    <Text>
-                      Coming Soon.
-                    </Text>
-               </View>
-
+                <Text style={[contactStyles.body, {}]}>
+                    Please contact rhinestonerecords@hotmail.com if your museum, school, or private institution would be interested in commissioning a custom base station.
+                </Text>
+                <View style={contactStyles.containerB}>
+                    <View style={contactStyles.buttonContainer}>
+                        <TouchableOpacity onPress={this._donate}>
+                            <Text style={contactStyles.button}>donate</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={contactStyles.buttonContainer}>
+                        <TouchableOpacity onPress={this._donate}>
+                            <Text style={contactStyles.button}>email</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         )
     }
 }
 
 
-
-const aboutStyles = StyleSheet.create({
+const contactStyles = StyleSheet.create({
     container: {
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 30,
+    },
+    containerB: {
+        marginTop: 50,
+        height: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonContainer: {
+        flex: 1,
+        marginLeft: 5,
+        marginRight: 5,
     },
     emptyContainer: {
         alignSelf: "stretch",
@@ -74,10 +105,25 @@ const aboutStyles = StyleSheet.create({
         textTransform: 'uppercase',
         fontFamily: "grenze-regular"
     },
+    body: {
+        textAlign: 'center',
+    },
     logo: {
         backgroundColor: "transparent",
         width: 140,
         height: 32,
         marginBottom: 32
     },
+    button: {
+        backgroundColor: 'black',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 12,
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 12,
+        textAlign:'center',
+    }
 });
