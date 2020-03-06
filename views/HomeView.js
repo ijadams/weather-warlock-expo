@@ -4,6 +4,7 @@ import {
     Text,
     View,
     Button,
+    Modal,
     Hr,
     Alert,
     TouchableHighlight,
@@ -15,12 +16,14 @@ import moment from 'moment';
 import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
 import {Weather, AnimatedGradient, InstrumentBar} from '../components';
-import SlidingUpPanel from 'rn-sliding-up-panel';
 import {InstrumentsView} from "./InstrumentsView";
+import {ArchivesView} from "./ArchivesView";
+import SlidingUpPanel from 'rn-sliding-up-panel';
 
 const LOADING_STRING = "... loading ...";
 
 export class HomeView extends React.Component {
+
     constructor(props) {
         super(props);
         this.index = 0;
@@ -31,6 +34,8 @@ export class HomeView extends React.Component {
             isBuffering: false,
             isLoading: true,
             fontLoaded: false,
+            instrumentModalVisible: false,
+            archiveModalVisible: false,
             colors: ['rgb(255,255,255)', 'rgb(255,255,255)', 'rgb(255,255,255)'],
             weather: {
                 summary: LOADING_STRING,
@@ -112,6 +117,12 @@ export class HomeView extends React.Component {
         return directions[Math.round(((windBearing %= 360) < 0 ? windBearing + 360 : windBearing) / 45) % 8];
     }
 
+    _setArchiveModalVis(visible) {
+        this.setState({archiveModalVisible: visible});
+        DeviceEventEmitter.emit('event.drawer', {});
+
+    }
+
     _handleBottomDrawer(show) {
         if (show) {
             this._panel.show();
@@ -119,10 +130,6 @@ export class HomeView extends React.Component {
             this._panel.hide()
         }
         DeviceEventEmitter.emit('event.drawer', {});
-    }
-
-    _handleTopDrawer() {
-        alert('open drawer');
     }
 
     render() {
@@ -143,21 +150,35 @@ export class HomeView extends React.Component {
                     }]}>
                         Weather for the Blind
                     </Text>
-                    <TouchableOpacity onPress={() => this._handleTopDrawer(false)}>
+                    <TouchableOpacity onPress={() => this._setArchiveModalVis(true)}>
                         <View style={styles.nameContainer}>
-                            <Ionicons name="ios-information-circle-outline" color={textColor} size={16}/>
+                            <Ionicons name="ios-information-circle-outline" color={textColor} size={20}/>
                             <Text style={[styles.text, {
-                                    textTransform: 'lowercase',
-                                    fontFamily: "grenze-regular",
-                                    color: textColor,
-                                    fontSize: 16,
-                                    marginTop: -4,
-                                    marginLeft: 4
-                                }]}>{this.state.playbackInstanceName}</Text>
+                                fontFamily: "grenze-regular",
+                                color: textColor,
+                                fontSize: 20,
+                                marginTop: -4,
+                                marginLeft: 4
+                            }]}>
+                                Archives
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <Weather weather={this.state.weather}></Weather>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.archiveModalVisible}>
+                    <View style={[styles.container, {backgroundColor: '#fff'}]}>
+                        <ArchivesView/>
+                        <View style={styles.downArrowContainer}>
+                            <TouchableOpacity onPress={() => this._setArchiveModalVis(false)}>
+                                <Ionicons name="ios-close" color="#000" size={40}/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.bottomContainer}>
                     <TouchableOpacity onPress={() => this._handleBottomDrawer(true)}
                                       style={styles.bottomPanelContainer}>

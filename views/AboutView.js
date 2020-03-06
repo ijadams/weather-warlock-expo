@@ -44,7 +44,7 @@ export class AboutView extends React.Component {
                 </Text>
                 <Image style={aboutStyles.logo}
                        source={fromPlaylist.ICON_WARLOCK_BOARD.module}/>
-                <ScrollView style={[aboutStyles.textContainer, {}]}>
+                <ScrollView style={[aboutStyles.textContainer, {}]} horizontal={false} showsVerticalScrollIndicator={false}>
                     <Text>
                        Since 2011 Quintronics – the company which brought you the Drum Buddy – has been actively developing
                        a low voltage weather controlled drone synthesizer. Base station number 1, called WEATHER WARLOCK

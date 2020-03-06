@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import * as fromPlaylist from "../constants/player.const";
 import {Audio, Video} from "expo-av";
+import {Asset} from "expo-asset";
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
@@ -23,6 +24,13 @@ export class Weather extends React.Component {
 
         this.index = 0;
         this.playbackInstance = null;
+        this.tracks = [
+            {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri},
+            {title: 'Relax', path: Asset.fromModule(require('../assets/audio/relax.mp3')).uri},
+            {title: 'Work', path: Asset.fromModule(require('../assets/audio/work.mp3')).uri},
+            {title: 'Storm', path: Asset.fromModule(require('../assets/audio/storm.mp3')).uri},
+            {title: 'Sunrise', path: Asset.fromModule(require('../assets/audio/sunrise.mp3')).uri},
+        ];
         this.state = {
             time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
             showVideo: false,
@@ -62,6 +70,10 @@ export class Weather extends React.Component {
                 time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
             });
         }, 1000);
+
+        DeviceEventEmitter.addListener("event.archive", (e) => {
+            this._loadNewPlaybackArchiveInstance(e)
+        });
     }
 
     getCircleFillWidth(moonPhase) {
@@ -91,13 +103,13 @@ export class Weather extends React.Component {
         DeviceEventEmitter.emit('event.weatherScroll', {});
     }
 
-    async _loadNewPlaybackInstance(playing) {
+    async _loadNewPlaybackInstance(playing, title) {
         if (this.playbackInstance != null) {
             await this.playbackInstance.unloadAsync();
             this.playbackInstance = null;
         }
 
-        const source = {uri: fromPlaylist.PLAYLIST[this.index].uri};
+        const source = title ? {uri: this.tracks.filter(i => i.title.toLowerCase() === title.toLowerCase())[0].path } : {uri: fromPlaylist.PLAYLIST[this.index].uri};
         const initialStatus = {
             shouldPlay: playing,
             rate: this.state.rate,
@@ -123,6 +135,13 @@ export class Weather extends React.Component {
         this._updateScreenForLoading(false);
     }
 
+    async _loadNewPlaybackArchiveInstance(title) {
+        if (title === 'live') {
+           this._loadNewPlaybackInstance(this.state.isPlaying);
+        } else {
+          this._loadNewPlaybackInstance(this.state.isPlaying, title)
+        }
+    }
 
     _mountVideo = component => {
         this._video = component;

@@ -49,10 +49,10 @@ export class InstrumentPlayer extends React.Component {
     componentDidMount() {
         Audio.setAudioModeAsync({
             allowsRecordingIOS: false,
-            staysActiveInBackground: false,
             interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
             playsInSilentModeIOS: true,
             shouldDuckAndroid: true,
+            staysActiveInBackground: true,
             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
             playThroughEarpieceAndroid: false
         });
