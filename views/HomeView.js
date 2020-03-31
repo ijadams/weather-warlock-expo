@@ -70,7 +70,12 @@ export class HomeView extends React.Component {
             });
             this.setState({fontLoaded: true});
         })();
+
+        DeviceEventEmitter.addListener("event.archive", (title) => {
+            this.setState({playbackInstanceName: title});
+        });
     }
+
 
     _loadWeatherData() {
         const url = `https://weather-warlock.s3.amazonaws.com/weather.json`;
@@ -171,7 +176,7 @@ export class HomeView extends React.Component {
                     transparent={true}
                     visible={this.state.archiveModalVisible}>
                     <View style={[styles.container, {backgroundColor: '#fff'}]}>
-                        <ArchivesView/>
+                        <ArchivesView activeTrack={this.state.playbackInstanceName}/>
                         <View style={styles.downArrowContainer}>
                             <TouchableOpacity onPress={() => this._setArchiveModalVis(false)}>
                                 <Ionicons name="ios-close" color="#000" size={40}/>

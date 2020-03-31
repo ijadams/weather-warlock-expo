@@ -8,20 +8,21 @@ import {
 } from "react-native";
 import {Asset} from "expo-asset";
 import {MaterialIcons} from "@expo/vector-icons";
+import {PLAYLIST} from '../constants/player.const';
 import {DEVICE_HEIGHT, styles} from "../constants";
 import * as Font from "expo-font";
-import {InstrumentPlayer} from "../components";
-
 
 export class ArchivesView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fontLoaded: false
+            fontLoaded: false,
+            activeTrack: null
         };
     }
 
     componentDidMount() {
+        this.setState({activeTrack: this.props.activeTrack});
         (async () => {
             await Font.loadAsync({
                 ...MaterialIcons.font,
@@ -31,7 +32,14 @@ export class ArchivesView extends React.Component {
                 "roboto-light": require("../assets/fonts/Roboto-Light.ttf")
             });
             this.setState({fontLoaded: true});
+
         })();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.activeTrack !== prevProps.activeTrack) {
+            this.setState({activeTrack: this.props.activeTrack});
+        }
     }
 
     _emitEvent(title) {
@@ -40,13 +48,16 @@ export class ArchivesView extends React.Component {
 
 
     render() {
-        let tracks = [
+        const tracks = [
+            {title: 'Live Stream', path: PLAYLIST[0].uri},
             {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri},
             {title: 'Relax', path: Asset.fromModule(require('../assets/audio/relax.mp3')).uri},
             {title: 'Work', path: Asset.fromModule(require('../assets/audio/work.mp3')).uri},
             {title: 'Storm', path: Asset.fromModule(require('../assets/audio/storm.mp3')).uri},
             {title: 'Sunrise', path: Asset.fromModule(require('../assets/audio/sunrise.mp3')).uri},
         ];
+        const activeTrack = this.state.activeTrack;
+
         return !this.state.fontLoaded ? (
             <View style={styles.emptyContainer}/>
         ) : (
@@ -64,8 +75,8 @@ export class ArchivesView extends React.Component {
                         contentContainerStyle={archivesStyles.list}
                         renderItem={({item, i}) =>
                             <View key={i} style={archivesStyles.buttonContainer}>
-                                <TouchableOpacity onPress={() => this._emitEvent(item.title)}>
-                                    <Text style={archivesStyles.button}>{item.title}</Text>
+                                <TouchableOpacity onPress={() => this._emitEvent(item.title)} disabled={activeTrack === item.title}>
+                                    <Text style={[archivesStyles.button, activeTrack === item.title ? archivesStyles.buttonActive : {}]}>{item.title}</Text>
                                 </TouchableOpacity>
                             </View>
                         }
@@ -142,10 +153,19 @@ const archivesStyles = StyleSheet.create({
         overflow: 'hidden',
         padding: 20,
         marginTop: 10,
-        marginTop: 10,
         marginLeft: 5,
         marginRight: 5,
         textAlign: 'center',
         textTransform: 'lowercase'
+    },
+    buttonActive: {
+        backgroundColor: 'black',
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 8,
+        color: 'white',
+        fontSize: 18,
+        fontWeight: '400',
+        letterSpacing: 1,
     }
 });

@@ -136,7 +136,7 @@ export class Weather extends React.Component {
     }
 
     async _loadNewPlaybackArchiveInstance(title) {
-        if (title === 'live') {
+        if (title === 'Live Stream') {
            this._loadNewPlaybackInstance(this.state.isPlaying);
         } else {
           this._loadNewPlaybackInstance(this.state.isPlaying, title)
@@ -148,7 +148,7 @@ export class Weather extends React.Component {
         this._loadNewPlaybackInstance(false);
     };
 
-    _updateScreenForLoading(isLoading) {
+    _updateScreenForLoading(isLoading, title) {
         if (isLoading) {
             this.setState({
                 showVideo: false,
@@ -160,10 +160,11 @@ export class Weather extends React.Component {
             });
         } else {
             this.setState({
-                playbackInstanceName: fromPlaylist.PLAYLIST[this.index].name,
+                playbackInstanceName: title ? title : fromPlaylist.PLAYLIST[this.index].name,
                 showVideo: fromPlaylist.PLAYLIST[this.index].isVideo,
                 isLoading: false
             });
+            this._onPlayPausePressed();
         }
     }
 
