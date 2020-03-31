@@ -64,7 +64,7 @@ export class ContactView extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={contactStyles.buttonContainer}>
-                        <TouchableOpacity onPress={this._donate}>
+                        <TouchableOpacity onPress={this._email}>
                             <Text style={contactStyles.button}>email</Text>
                         </TouchableOpacity>
                     </View>
