@@ -20,6 +20,11 @@
     "packagerOpts": {
       "assetExts": ["png", "ttf"]
     },
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/audio/*",
+      "assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {

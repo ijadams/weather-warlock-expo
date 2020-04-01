@@ -25,11 +25,7 @@ export class Weather extends React.Component {
         this.index = 0;
         this.playbackInstance = null;
         this.tracks = [
-            {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri},
-            {title: 'Relax', path: Asset.fromModule(require('../assets/audio/relax.mp3')).uri},
-            {title: 'Work', path: Asset.fromModule(require('../assets/audio/work.mp3')).uri},
-            {title: 'Storm', path: Asset.fromModule(require('../assets/audio/storm.mp3')).uri},
-            {title: 'Sunrise', path: Asset.fromModule(require('../assets/audio/sunrise.mp3')).uri},
+            {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri}
         ];
         this.state = {
             time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
