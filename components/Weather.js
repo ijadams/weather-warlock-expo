@@ -58,13 +58,13 @@ export class Weather extends React.Component {
 
     componentDidMount() {
         Audio.setAudioModeAsync({
-            allowsRecordingIOS: false,
-            staysActiveInBackground: false,
-            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+            allowsRecordingIOS: true,
             playsInSilentModeIOS: true,
-            shouldDuckAndroid: true,
+            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+            staysActiveInBackground: true,
             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-            playThroughEarpieceAndroid: false
+            shouldDuckAndroid: true,
+            playThroughEarpieceAndroid: true,
         });
         setInterval(() => {
             this.setState({
@@ -197,7 +197,7 @@ export class Weather extends React.Component {
             }
         } else {
             if (status.error) {
-                console.log(`FATAL PLAYER ERROR: ${status.error}`);
+                // console.log(`FATAL PLAYER ERROR: ${status.error}`);
             }
         }
     };
