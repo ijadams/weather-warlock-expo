@@ -29,7 +29,6 @@ export class WeatherDataView extends React.Component {
             });
             this.setState({fontLoaded: true});
         })();
-        console.log(this.state.weather);
     }
 
     render() {
