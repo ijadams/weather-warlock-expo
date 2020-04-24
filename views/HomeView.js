@@ -179,7 +179,7 @@ export class HomeView extends React.Component {
                         <ArchivesView activeTrack={this.state.playbackInstanceName}/>
                         <View style={styles.downArrowContainer}>
                             <TouchableOpacity onPress={() => this._setArchiveModalVis(false)}>
-                                <Ionicons name="ios-close" color="#000" size={40}/>
+                                <Ionicons name="ios-close" color="#000" size={50}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -194,7 +194,7 @@ export class HomeView extends React.Component {
                             <InstrumentsView/>
                             <View style={styles.downArrowContainer}>
                                 <TouchableOpacity onPress={() => this._handleBottomDrawer(false)}>
-                                    <Ionicons name="ios-arrow-down" color="#000" size={32}/>
+                                    <Ionicons name="ios-arrow-down" color="#000" size={50}/>
                                 </TouchableOpacity>
                             </View>
                         </View>

@@ -11,6 +11,7 @@ import {
 import * as fromPlaylist from "../constants/player.const";
 import {Audio, Video} from "expo-av";
 import {Asset} from "expo-asset";
+
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 const FONT_SIZE = 14;
 const LOADING_STRING = "... loading ...";
@@ -25,7 +26,11 @@ export class Weather extends React.Component {
         this.index = 0;
         this.playbackInstance = null;
         this.tracks = [
-            {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri}
+            {title: 'Sleep', path: Asset.fromModule(require('../assets/audio/sleep.mp3')).uri},
+            {title: 'Relax', path: Asset.fromModule(require('../assets/audio/relax.mp3')).uri},
+            {title: 'Work', path: Asset.fromModule(require('../assets/audio/work.mp3')).uri},
+            {title: 'Storm', path: Asset.fromModule(require('../assets/audio/storm.mp3')).uri},
+            {title: 'Sunrise', path: Asset.fromModule(require('../assets/audio/sunrise.mp3')).uri},
         ];
         this.state = {
             time: moment.tz(this.props.weather.timeZone).format('HH:mm'),
@@ -105,7 +110,15 @@ export class Weather extends React.Component {
             this.playbackInstance = null;
         }
 
-        const source = title ? {uri: this.tracks.filter(i => i.title.toLowerCase() === title.toLowerCase())[0].path } : {uri: fromPlaylist.PLAYLIST[this.index].uri};
+        const getSource = () => {
+            if (title && this.tracks && this.tracks.length) {
+                return {uri: this.tracks.filter(i => i.title.toLowerCase() === title.toLowerCase())[0].path}
+            } else {
+                return {uri: fromPlaylist.PLAYLIST[this.index].uri};
+            }
+        };
+
+        const source = getSource();
         const initialStatus = {
             shouldPlay: playing,
             rate: this.state.rate,
@@ -133,9 +146,9 @@ export class Weather extends React.Component {
 
     async _loadNewPlaybackArchiveInstance(title) {
         if (title === 'Live Stream') {
-           this._loadNewPlaybackInstance(this.state.isPlaying);
+            this._loadNewPlaybackInstance(this.state.isPlaying);
         } else {
-          this._loadNewPlaybackInstance(this.state.isPlaying, title)
+            this._loadNewPlaybackInstance(this.state.isPlaying, title)
         }
     }
 
@@ -414,8 +427,8 @@ const weatherStyles = StyleSheet.create({
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 12,
-        marginRight: 8,
-        marginLeft: 8
+        marginRight: 12,
+        marginLeft: 12
     },
     item: {
         width: '100%',

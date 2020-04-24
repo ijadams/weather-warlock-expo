@@ -92,7 +92,7 @@ export default class App extends React.Component {
                             this._handlePaginatorClick(0)
                         }}>
                             <Text
-                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 0 ? 'bold' : 'normal'}]}>
+                                style={[styles.pagerText]}>
                                 Home
                             </Text>
                         </TouchableOpacity>
@@ -102,7 +102,7 @@ export default class App extends React.Component {
                             this._handlePaginatorClick(1)
                         }}>
                             <Text
-                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 1 ? 'bold' : 'normal'}]}>
+                                style={[styles.pagerText]}>
                                 About
                             </Text>
                         </TouchableOpacity>
@@ -112,7 +112,7 @@ export default class App extends React.Component {
                             this._handlePaginatorClick(2)
                         }}>
                             <Text
-                                style={[styles.pagerText, {fontWeight: this.state.activeIndex === 2 ? 'bold' : 'normal'}]}>
+                                style={[styles.pagerText]}>
                                 Contact
                             </Text>
                         </TouchableOpacity>
