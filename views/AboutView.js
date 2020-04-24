@@ -5,7 +5,6 @@ import {
     View,
     StyleSheet, ScrollView
 } from "react-native";
-import {LinearGradient} from 'expo-linear-gradient';
 import {MaterialIcons} from "@expo/vector-icons";
 import {styles} from "../constants";
 import * as fromPlaylist from "../constants/player.const";

@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, Text, View, ScrollView, Dimensions, DeviceEventEmitter, TouchableOpacity} from 'react-native';
 
-import {HomeView, AboutView, ContactView} from './views';
+import {HomeView, AboutView, ContactView, InstrumentsView} from './views';
 
 const {width: DEVICE_WIDTH, height: DEVICE_HEIGHT} = Dimensions.get("window");
 
@@ -44,6 +44,9 @@ export default class App extends React.Component {
         if (index === 2) {
             this.scroll.scrollTo({x: DEVICE_WIDTH * 2})
         }
+        if (index === 3) {
+            this.scroll.scrollTo({x: DEVICE_WIDTH * 3})
+        }
         this.setState({activeIndex: index});
     }
 
@@ -55,8 +58,11 @@ export default class App extends React.Component {
         if (scrollWidth >= DEVICE_WIDTH && scrollWidth < DEVICE_WIDTH * 2) {
             this.setState({activeIndex: 1})
         }
-        if (scrollWidth >= DEVICE_WIDTH * 2) {
+        if (scrollWidth >= DEVICE_WIDTH && scrollWidth < DEVICE_WIDTH * 3) {
             this.setState({activeIndex: 2})
+        }
+        if (scrollWidth >= DEVICE_WIDTH * 4) {
+            this.setState({activeIndex: 3})
         }
     }
 
@@ -76,6 +82,10 @@ export default class App extends React.Component {
                         <HomeView></HomeView>
                     </View>
 
+                    <View style={styles.contactView}>
+                        <InstrumentsView></InstrumentsView>
+                    </View>
+
                     <View style={styles.aboutView}>
                         <AboutView></AboutView>
                     </View>
@@ -93,7 +103,7 @@ export default class App extends React.Component {
                         }}>
                             <Text
                                 style={[styles.pagerText]}>
-                                Home
+                                Play
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -103,13 +113,23 @@ export default class App extends React.Component {
                         }}>
                             <Text
                                 style={[styles.pagerText]}>
-                                About
+                                Mix
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.pagerItem}>
                         <TouchableOpacity onPress={() => {
                             this._handlePaginatorClick(2)
+                        }}>
+                            <Text
+                                style={[styles.pagerText]}>
+                                About
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.pagerItem}>
+                        <TouchableOpacity onPress={() => {
+                            this._handlePaginatorClick(3)
                         }}>
                             <Text
                                 style={[styles.pagerText]}>
@@ -144,6 +164,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
+    instrumentsView: {
+        width: DEVICE_WIDTH,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
     contactView: {
         width: DEVICE_WIDTH,
         backgroundColor: '#fff',
@@ -159,7 +186,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     pagerItem: {
-        width: '32%',
+        width: '25%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -168,6 +195,7 @@ const styles = StyleSheet.create({
     },
     pagerText: {
         color: 'white',
-        textTransform: 'lowercase'
+        textTransform: 'lowercase',
+        fontWeight: 700
     }
 });

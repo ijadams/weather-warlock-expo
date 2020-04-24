@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
         backgroundColor: BACKGROUND_COLOR
     },
     fadeView: {
+        display: 'block',
         position: 'absolute',
         top: 0,
         zIndex: 10,
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
         backgroundColor: BACKGROUND_COLOR
     },
     downArrowContainer: {
-        height: 50,
+        height: 60,
     },
     bottomPanelContainer: {
         flex: 1,
@@ -75,7 +76,17 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 5,
+        padding: 5,
+        borderWidth: 1,
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 4.00,
+        elevation: 8,
     },
     space: {
         height: FONT_SIZE

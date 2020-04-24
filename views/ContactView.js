@@ -93,6 +93,13 @@ const contactStyles = StyleSheet.create({
         flex: 1,
         marginLeft: 5,
         marginRight: 5,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 4.00,
+        elevation: 8,
     },
     emptyContainer: {
         alignSelf: "stretch",
@@ -121,9 +128,10 @@ const contactStyles = StyleSheet.create({
         borderRadius: 12,
         color: 'white',
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: 500,
         overflow: 'hidden',
         padding: 12,
         textAlign:'center',
+        textTransform: 'uppercase'
     }
 });

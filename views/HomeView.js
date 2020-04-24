@@ -12,8 +12,8 @@ import {MaterialIcons, Ionicons} from "@expo/vector-icons";
 import moment from 'moment';
 import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
-import {Weather, AnimatedGradient, InstrumentBar} from '../components';
-import {ArchivesView, InstrumentsView, FadeInView} from './index';
+import {Weather, AnimatedGradient, TextBar} from '../components';
+import {ArchivesView, WeatherDataView} from './index';
 
 const LOADING_STRING = "... loading ...";
 
@@ -81,6 +81,7 @@ export class HomeView extends React.Component {
             .then(json => {
                 this.setState({
                     weather: {
+                        res: json,
                         summary: json.currently.summary,
                         temperature: Math.floor(json.currently.temperature),
                         humidity: Math.floor(json.currently.humidity * 100),
@@ -131,6 +132,7 @@ export class HomeView extends React.Component {
 
     render() {
         const textColor = this.state.weather.isDay ? '#000' : '#fff';
+        const textColorOpposite = this.state.weather.isDay ? '#fff' : '#000';
         return !this.state.fontLoaded || !this.state.weather.weatherLoaded ? (
             <View style={styles.emptyContainer}/>
         ) : (
@@ -148,16 +150,16 @@ export class HomeView extends React.Component {
                         Weather for the Blind
                     </Text>
                     <TouchableOpacity onPress={() => this._setArchiveModalVis(true)}>
-                        <View style={styles.nameContainer}>
-                            <Ionicons name="ios-information-circle-outline" color={textColor} size={20}/>
+                        <View style={[styles.nameContainer, {backgroundColor: textColor, borderColor: textColorOpposite}]}>
                             <Text style={[styles.text, {
-                                fontFamily: "grenze-regular",
-                                color: textColor,
-                                fontSize: 20,
-                                marginTop: -4,
-                                marginLeft: 4
+                                color: textColorOpposite,
+                                fontSize: 14,
+                                fontWeight: 500,
+                                paddingLeft: 4,
+                                paddingRight: 4,
+                                letterSpacing: 0.2,
                             }]}>
-                                Archives
+                                ARCHIVES
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -179,20 +181,22 @@ export class HomeView extends React.Component {
                 <View style={styles.bottomContainer}>
                     <TouchableOpacity onPress={() => this._handleBottomDrawer()}
                                       style={styles.bottomPanelContainer}>
-                        <InstrumentBar weather={this.state.weather}></InstrumentBar>
+                        <TextBar weather={this.state.weather}></TextBar>
                     </TouchableOpacity>
                 </View>
-                <FadeInView visible={this.state.instrumentModalVisible}
-                            style={[styles.fadeView]}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.instrumentModalVisible}>
                     <View style={[styles.container, {backgroundColor: '#fff'}]}>
-                        <InstrumentsView/>
+                        <WeatherDataView weather={this.state.weather.res} />
                         <View style={styles.downArrowContainer}>
-                            <TouchableOpacity onPress={() => this._handleBottomDrawer()}>
+                            <TouchableOpacity onPress={() => this._handleBottomDrawer(false)}>
                                 <Ionicons name="ios-close" color="#000" size={50}/>
                             </TouchableOpacity>
                         </View>
                     </View>
-                </FadeInView>
+                </Modal>
             </AnimatedGradient>
         );
     }

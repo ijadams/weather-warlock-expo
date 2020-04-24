@@ -26,6 +26,7 @@
     "react-native-svg": "~9.5.1",
     "react-navigate": "^0.6.0",
     "react-navigation": "^4.0.10",
+    "react-number-format": "^4.4.1",
     "rgb2hex": "^0.1.9"
   },
   "devDependencies": {

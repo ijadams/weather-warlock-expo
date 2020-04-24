@@ -1,4 +1,4 @@
 export * from './Weather';
 export * from './AnimatedGradient';
-export * from './InstrumentBar';
+export * from './TextBar';
 export * from './InstrumentPlayer';

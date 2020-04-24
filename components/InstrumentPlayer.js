@@ -292,8 +292,8 @@ const playerStyles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        minWidth: '56%',
-        maxWidth: '56%'
+        minWidth: '50%',
+        maxWidth: '50%'
     },
     volumeSlider: {
         width: '100%'

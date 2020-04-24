@@ -461,7 +461,6 @@ const weatherStyles = StyleSheet.create({
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
-
         elevation: 24,
     },
     circleText: {
