@@ -7,7 +7,10 @@
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "version": "3.0.0",
-    "platforms": ["android", "ios"],
+    "platforms": [
+      "android",
+      "ios"
+    ],
     "githubUrl": "https://github.com/ijadams",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
@@ -18,7 +21,10 @@
       "resizeMode": "contain"
     },
     "packagerOpts": {
-      "assetExts": ["png", "ttf"]
+      "assetExts": [
+        "png",
+        "ttf"
+      ]
     },
     "assetBundlePatterns": [
       "assets/images/*",

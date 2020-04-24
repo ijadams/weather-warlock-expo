@@ -26,8 +26,7 @@
     "react-native-svg": "~9.5.1",
     "react-navigate": "^0.6.0",
     "react-navigation": "^4.0.10",
-    "rgb2hex": "^0.1.9",
-    "rn-sliding-up-panel": "^2.4.0"
+    "rgb2hex": "^0.1.9"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

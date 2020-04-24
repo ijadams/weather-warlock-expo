@@ -29,6 +29,13 @@ export const styles = StyleSheet.create({
         alignSelf: "stretch",
         backgroundColor: BACKGROUND_COLOR
     },
+    fadeView: {
+        position: 'absolute',
+        top: 0,
+        zIndex: 10,
+        height: '100%',
+        width: '100%'
+    },
     bottomContainer: {
         flex: 1,
         flexDirection: "column",
@@ -38,7 +45,7 @@ export const styles = StyleSheet.create({
         backgroundColor: BACKGROUND_COLOR
     },
     downArrowContainer: {
-      height: 50,
+        height: 50,
     },
     bottomPanelContainer: {
         flex: 1,

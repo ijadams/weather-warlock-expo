@@ -3,11 +3,8 @@ import {
     Image,
     Text,
     View,
-    Button,
     Modal,
     Hr,
-    Alert,
-    TouchableHighlight,
     TouchableOpacity, DeviceEventEmitter
 } from "react-native";
 import * as Font from "expo-font";
@@ -16,9 +13,7 @@ import moment from 'moment';
 import {styles} from '../constants';
 import * as fromPlaylist from '../constants/player.const';
 import {Weather, AnimatedGradient, InstrumentBar} from '../components';
-import {InstrumentsView} from "./InstrumentsView";
-import {ArchivesView} from "./ArchivesView";
-import SlidingUpPanel from 'rn-sliding-up-panel';
+import {ArchivesView, InstrumentsView, FadeInView} from './index';
 
 const LOADING_STRING = "... loading ...";
 
@@ -128,12 +123,9 @@ export class HomeView extends React.Component {
 
     }
 
-    _handleBottomDrawer(show) {
-        if (show) {
-            this._panel.show();
-        } else {
-            this._panel.hide()
-        }
+    _handleBottomDrawer() {
+        const bool = !this.state.instrumentModalVisible;
+        this.setState({instrumentModalVisible: bool});
         DeviceEventEmitter.emit('event.drawer', {});
     }
 
@@ -185,21 +177,22 @@ export class HomeView extends React.Component {
                     </View>
                 </Modal>
                 <View style={styles.bottomContainer}>
-                    <TouchableOpacity onPress={() => this._handleBottomDrawer(true)}
+                    <TouchableOpacity onPress={() => this._handleBottomDrawer()}
                                       style={styles.bottomPanelContainer}>
                         <InstrumentBar weather={this.state.weather}></InstrumentBar>
                     </TouchableOpacity>
-                    <SlidingUpPanel ref={c => this._panel = c} allowDragging={false} showBackdrop={false}>
-                        <View style={[styles.container, {backgroundColor: '#fff'}]}>
-                            <InstrumentsView/>
-                            <View style={styles.downArrowContainer}>
-                                <TouchableOpacity onPress={() => this._handleBottomDrawer(false)}>
-                                    <Ionicons name="ios-arrow-down" color="#000" size={50}/>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </SlidingUpPanel>
                 </View>
+                <FadeInView visible={this.state.instrumentModalVisible}
+                            style={[styles.fadeView]}>
+                    <View style={[styles.container, {backgroundColor: '#fff'}]}>
+                        <InstrumentsView/>
+                        <View style={styles.downArrowContainer}>
+                            <TouchableOpacity onPress={() => this._handleBottomDrawer()}>
+                                <Ionicons name="ios-close" color="#000" size={50}/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </FadeInView>
             </AnimatedGradient>
         );
     }
