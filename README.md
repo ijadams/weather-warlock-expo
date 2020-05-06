@@ -4,5 +4,7 @@
 
 http://weatherfortheblind.org/
 
+https://weather-warlock.s3.amazonaws.com/demo.gif
+
 ![Prototype Demo](https://weather-warlock.s3.amazonaws.com/demo.gif)
 
